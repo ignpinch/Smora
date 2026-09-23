@@ -45,6 +45,90 @@ button {
   align-items: center;
 }
 
+
+/* ========================================
+   VISIT COUNTER
+======================================== */
+
+.visit-card {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+
+  min-width: 118px;
+  height: 48px;
+
+  padding: 5px 12px 5px 6px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  transform: translateY(-50%);
+
+  border: 2px solid #2e2e2e;
+  border-radius: 15px;
+
+  background: #ffffff;
+  color: #2e2e2e;
+
+  box-shadow: 0 4px 0 #2e2e2e;
+}
+
+.visit-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid #2e2e2e;
+  border-radius: 11px;
+
+  background: #ffc629;
+  color: #2e2e2e;
+}
+
+.visit-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.visit-info {
+  min-width: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 2px;
+}
+
+.visit-label {
+  color: #8a857e;
+
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.visit-count {
+  color: #2e2e2e;
+
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+
+  letter-spacing: -0.025em;
+}
+
 .brand-logo {
   display: block;
   width: auto;
@@ -735,6 +819,26 @@ button {
     height: 41px;
   }
 
+  .visit-card {
+    height: 43px;
+    min-width: 108px;
+  }
+
+  .visit-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+  }
+
+  .visit-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .visit-count {
+    font-size: 14px;
+  }
+
   .landing-content {
     padding-top: 4px;
     padding-bottom: 12px;
@@ -792,6 +896,47 @@ button {
 
   .brand-logo {
     height: 42px;
+  }
+
+  .visit-card {
+    right: 0;
+
+    min-width: 96px;
+    height: 40px;
+
+    padding: 4px 8px 4px 5px;
+
+    gap: 7px;
+
+    border-radius: 12px;
+
+    box-shadow: 0 3px 0 #2e2e2e;
+  }
+
+  .visit-icon {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 8px;
+  }
+
+  .visit-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .visit-info {
+    min-width: 42px;
+    gap: 1px;
+  }
+
+  .visit-label {
+    font-size: 7px;
+    letter-spacing: 0.08em;
+  }
+
+  .visit-count {
+    font-size: 12px;
   }
 
   .landing-content {
