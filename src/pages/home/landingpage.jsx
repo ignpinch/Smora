@@ -7,10 +7,6 @@ import "./home.css";
 
 import primarylogo from "../../assets/smora-primary.png";
 
-/* ========================================
-   ICONS
-======================================== */
-
 function ArrowIcon({
   className = "",
 }) {
@@ -104,9 +100,167 @@ function EyeIcon({
   );
 }
 
-/* ========================================
-   SOLO GRAPHIC
-======================================== */
+function SparklesIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 3 1.25 3.75L17 8l-3.75 1.25L12 13l-1.25-3.75L7 8l3.75-1.25L12 3Z" />
+      <path d="m18.5 14 0.7 2.3 2.3 0.7-2.3 0.7-0.7 2.3-0.7-2.3-2.3-0.7 2.3-0.7 0.7-2.3Z" />
+      <path d="m5 13 0.8 2.2L8 16l-2.2 0.8L5 19l-0.8-2.2L2 16l2.2-0.8L5 13Z" />
+    </svg>
+  );
+}
+
+function UsersIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="9" cy="8" r="3" />
+      <circle cx="17" cy="9" r="2.5" />
+      <path d="M3.5 19c.7-3.3 2.7-5 5.5-5s4.8 1.7 5.5 5" />
+      <path d="M14 15.2c.8-.8 1.8-1.2 3-1.2 2.2 0 3.7 1.3 4.3 3.8" />
+    </svg>
+  );
+}
+
+function ToolIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M14.7 6.3a4 4 0 0 0-5 5L4 17l3 3 5.7-5.7a4 4 0 0 0 5-5l-2.4 2.4-3-3 2.4-2.4Z" />
+    </svg>
+  );
+}
+
+function SlidersIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4 6h10" />
+      <path d="M18 6h2" />
+      <circle cx="16" cy="6" r="2" />
+      <path d="M4 12h3" />
+      <path d="M11 12h9" />
+      <circle cx="9" cy="12" r="2" />
+      <path d="M4 18h8" />
+      <path d="M16 18h4" />
+      <circle cx="14" cy="18" r="2" />
+    </svg>
+  );
+}
+
+function LayoutIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="3" y="4" width="18" height="16" rx="3" />
+      <path d="M9 4v16" />
+      <path d="M9 10h12" />
+    </svg>
+  );
+}
+
+function FlashIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M13 2 5.5 13H11l-1 9 8.5-12H13V2Z" />
+    </svg>
+  );
+}
+
+function StarIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" />
+    </svg>
+  );
+}
+
+function PaletteIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 3a9 9 0 1 0 0 18h1.2a2.3 2.3 0 0 0 0-4.6h-.8a1.8 1.8 0 0 1 0-3.6H15A6 6 0 0 0 21 7c0-2.2-3.9-4-9-4Z" />
+      <circle cx="7.5" cy="9" r="1" />
+      <circle cx="10" cy="6.5" r="1" />
+      <circle cx="14" cy="6.3" r="1" />
+    </svg>
+  );
+}
 
 function SoloGraphic() {
   return (
@@ -152,10 +306,6 @@ function SoloGraphic() {
   );
 }
 
-/* ========================================
-   DUO GRAPHIC
-======================================== */
-
 function DuoGraphic() {
   return (
     <div className="visual-scene locked-scene">
@@ -187,10 +337,6 @@ function DuoGraphic() {
     </div>
   );
 }
-
-/* ========================================
-   POSE MATCH GRAPHIC
-======================================== */
 
 function PoseMatchGraphic() {
   return (
@@ -234,9 +380,300 @@ function PoseMatchGraphic() {
   );
 }
 
-/* ========================================
-   MODE CARD
-======================================== */
+function NewNextGraphic({
+  type,
+}) {
+  if (type === "pose") {
+    return (
+      <div className="home-feature-graphic home-feature-graphic-pose home-feature-pose-match">
+        <PoseMatchGraphic />
+      </div>
+    );
+  }
+
+  if (type === "duo") {
+    return (
+      <div className="home-feature-graphic home-feature-graphic-duo">
+        <div className="home-feature-duo-window">
+          <div className="home-feature-duo-person">
+            <div />
+            <span />
+          </div>
+
+          <div className="home-feature-duo-divider" />
+
+          <div className="home-feature-duo-person">
+            <div />
+            <span />
+          </div>
+        </div>
+
+        <div className="home-feature-duo-bubble">
+          <UsersIcon />
+        </div>
+
+        <span className="home-feature-heart">
+          ♥
+        </span>
+      </div>
+    );
+  }
+
+  if (type === "idol") {
+    return (
+      <div className="home-feature-graphic home-feature-graphic-idol">
+        <div className="home-idol-frame">
+          <div className="home-idol-frame-top">
+            <span>IDOL SNAP</span>
+
+            <StarIcon />
+          </div>
+
+          <div className="home-idol-frame-photo">
+            <div className="home-idol-cutout">
+              <div className="home-idol-cutout-hair" />
+              <div className="home-idol-cutout-head" />
+              <div className="home-idol-cutout-neck" />
+              <div className="home-idol-cutout-body" />
+              <div className="home-idol-cutout-arm" />
+            </div>
+
+            <div className="home-idol-person">
+              <div className="home-idol-person-hair" />
+              <div className="home-idol-person-head" />
+              <div className="home-idol-person-body" />
+              <span className="home-idol-person-hand">
+                ✌
+              </span>
+            </div>
+
+            <span className="home-idol-frame-spark home-idol-frame-spark-one">
+              ✦
+            </span>
+
+            <span className="home-idol-frame-spark home-idol-frame-spark-two">
+              ✦
+            </span>
+          </div>
+
+          <div className="home-idol-frame-footer">
+            together in one frame
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="home-feature-graphic home-feature-graphic-strip">
+      <div className="home-strip-builder">
+        <div className="home-strip-builder-photo">
+          <div />
+          <span />
+        </div>
+
+        <div className="home-strip-builder-photo">
+          <div />
+          <span />
+        </div>
+
+        <div className="home-strip-builder-footer">
+          SMORA
+        </div>
+      </div>
+
+      <div className="home-strip-palette">
+        <span className="home-strip-color home-strip-color-yellow" />
+        <span className="home-strip-color home-strip-color-coral" />
+        <span className="home-strip-color home-strip-color-blue" />
+      </div>
+
+      <div className="home-strip-palette-icon">
+        <PaletteIcon />
+      </div>
+    </div>
+  );
+}
+
+function HomeUpdatesSection() {
+  const updates = [
+    {
+      title: "Better filters",
+      text: "We are refining the filters so your photos look cleaner, more consistent, and easier to choose from.",
+      icon: <SlidersIcon />,
+    },
+    {
+      title: "More Pose Match references",
+      text: "A new reference section will let you choose Solo, Duo, or Group poses before you start your Pose Match session.",
+      icon: <LayoutIcon />,
+    },
+    {
+      title: "Flash before capture",
+      text: "We are adding a quick flash right before each photo is captured so every shot feels clearer and easier to time.",
+      icon: <FlashIcon />,
+    },
+  ];
+
+  return (
+    <section className="home-updates-section">
+      <div className="home-updates-heading">
+        <span className="home-updates-kicker">
+          Keep up with Smora
+        </span>
+
+        <h2>
+          New things are coming.
+        </h2>
+
+        <p>
+          Discover new ways to use Smora and see what we are improving next.
+        </p>
+      </div>
+
+      <div className="home-new-panel">
+        <div className="home-panel-heading">
+          <div className="home-panel-icon home-panel-icon-new">
+            <SparklesIcon />
+          </div>
+
+          <div>
+            <span>What&apos;s New</span>
+            <h3>New ways to make memories</h3>
+          </div>
+        </div>
+
+        <div className="home-new-grid">
+          <article className="home-feature-card">
+            <NewNextGraphic type="pose" />
+
+            <div className="home-feature-copy">
+              <span className="home-feature-status home-feature-status-live">
+                New
+              </span>
+
+              <h4>Pose Match</h4>
+
+              <p>
+                Choose a pose reference, recreate it, and turn the result into a fun photo strip.
+              </p>
+            </div>
+          </article>
+
+          <article className="home-feature-card">
+            <NewNextGraphic type="duo" />
+
+            <div className="home-feature-copy">
+              <span className="home-feature-status home-feature-status-soon">
+                Upcoming
+              </span>
+
+              <h4>Duo</h4>
+
+              <p>
+                Take a photobooth together even when you are not in the same place.
+              </p>
+            </div>
+          </article>
+
+          <article className="home-feature-card">
+            <NewNextGraphic type="idol" />
+
+            <div className="home-feature-copy">
+              <span className="home-feature-status home-feature-status-soon">
+                Upcoming
+              </span>
+
+              <h4>Idol Snap</h4>
+
+              <p>
+                Pose in the same frame with a cutout of your favorite idol and make it look like you took the photobooth together.
+              </p>
+            </div>
+          </article>
+
+          <article className="home-feature-card">
+            <NewNextGraphic type="strip" />
+
+            <div className="home-feature-copy">
+              <span className="home-feature-status home-feature-status-live">
+                New
+              </span>
+
+              <h4>Make Your Own Strip Design</h4>
+
+              <p>
+                Personalize your photo strip and make the final design feel more like you.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div className="home-improvements-panel">
+        <div className="home-panel-heading">
+          <div className="home-panel-icon home-panel-icon-update">
+            <ToolIcon />
+          </div>
+
+          <div>
+            <span>Updates & Improvements</span>
+            <h3>Things we are making better</h3>
+          </div>
+        </div>
+
+        <div className="home-update-list">
+          {updates.map((update) => (
+            <article
+              key={update.title}
+              className="home-update-item"
+            >
+              <div className="home-update-icon">
+                {update.icon}
+              </div>
+
+              <div className="home-update-copy">
+                <strong>
+                  {update.title}
+                </strong>
+
+                <p>
+                  {update.text}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HomeFooter() {
+  return (
+    <footer className="smora-footer">
+      <div className="smora-footer-brand">
+        <img
+          src={primarylogo}
+          alt="Smora"
+        />
+
+        <div>
+          <strong>
+            Smile with Memories
+          </strong>
+
+          <span>
+            Little moments, made worth keeping.
+          </span>
+        </div>
+      </div>
+
+      <span className="smora-footer-copy">
+        © 2026 Smora
+      </span>
+    </footer>
+  );
+}
 
 function ModeCard({
   type,
@@ -329,10 +766,6 @@ function ModeCard({
   );
 }
 
-/* ========================================
-   LANDING PAGE
-======================================== */
-
 export default function Home({
   onSoloContinue,
   onPoseMatchContinue,
@@ -347,17 +780,9 @@ export default function Home({
     setVisitError,
   ] = useState(false);
 
-  /* ========================================
-     VISITOR COUNTER
-  ======================================== */
-
   useEffect(() => {
     const loadVisits = async () => {
       try {
-        /*
-          Prevent React StrictMode from
-          counting the same page load twice.
-        */
 
         if (
           window.__smoraVisitCounted
@@ -408,11 +833,6 @@ export default function Home({
           error
         );
 
-        /*
-          Allow a future reload to try again
-          when the request fails.
-        */
-
         window.__smoraVisitCounted =
           false;
 
@@ -430,10 +850,6 @@ export default function Home({
   return (
     <div className="smora-home">
       <main className="smora-container">
-
-        {/* =================================
-            HEADER
-        ================================= */}
 
         <header className="brand-header">
           <img
@@ -466,65 +882,55 @@ export default function Home({
           </div>
         </header>
 
-        {/* =================================
-            MAIN CONTENT
-        ================================= */}
-
         <div className="landing-content">
-          <section className="landing-header">
-            <h1>
-              How do you want to{" "}
-              <span>
-                snap?
-              </span>
-            </h1>
+          <section className="home-mode-section">
+            <section className="landing-header">
+              <h1>
+                How do you want to{" "}
+                <span>
+                  snap?
+                </span>
+              </h1>
 
-            <p>
-              Pick a mode and start making memories.
-            </p>
+              <p>
+                Pick a mode and start making memories.
+              </p>
+            </section>
+
+            <section className="photo-mode-grid">
+              <ModeCard
+                type="solo"
+                title="Solo"
+                description="Take your own photo strip."
+                badge="Popular"
+                onClick={() =>
+                  onSoloContinue?.()
+                }
+              />
+
+              <ModeCard
+                type="duo"
+                title="Duo"
+                description="Take photos together."
+                disabled
+              />
+
+              <ModeCard
+                type="pose"
+                title="Pose Match"
+                description="See a pose. Recreate it."
+                badge="New"
+                onClick={() =>
+                  onPoseMatchContinue?.()
+                }
+              />
+            </section>
           </section>
 
-          {/* =================================
-              PHOTO MODES
-          ================================= */}
-
-          <section className="photo-mode-grid">
-
-            {/* SOLO */}
-
-            <ModeCard
-              type="solo"
-              title="Solo"
-              description="Take your own photo strip."
-              badge="Popular"
-              onClick={() =>
-                onSoloContinue?.()
-              }
-            />
-
-            {/* DUO */}
-
-            <ModeCard
-              type="duo"
-              title="Duo"
-              description="Take photos together."
-              disabled
-            />
-
-            {/* POSE MATCH */}
-
-            <ModeCard
-              type="pose"
-              title="Pose Match"
-              description="See a pose. Recreate it."
-              badge="New"
-              onClick={() =>
-                onPoseMatchContinue?.()
-              }
-            />
-
-          </section>
+          <HomeUpdatesSection />
         </div>
+
+        <HomeFooter />
       </main>
     </div>
   );
