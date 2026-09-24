@@ -809,6 +809,320 @@ button {
   box-shadow: 0 4px 0 #aaa69f;
 }
 
+.smoraboard {
+  position: relative;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto 34px;
+  padding: 18px;
+  overflow: hidden;
+  border: 3px solid #2e2e2e;
+  border-radius: 26px;
+  background:
+    radial-gradient(
+      circle at 95% 18%,
+      rgba(255, 255, 255, 0.72) 0 27px,
+      transparent 28px
+    ),
+    radial-gradient(
+      circle at 86% 88%,
+      rgba(255, 123, 123, 0.24) 0 44px,
+      transparent 45px
+    ),
+    linear-gradient(
+      115deg,
+      #ffc629 0%,
+      #ffd96c 46%,
+      #fff4c9 100%
+    );
+  box-shadow: 0 7px 0 #2e2e2e;
+}
+
+.smoraboard-label-row {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.smoraboard-label,
+.smoraboard-category {
+  min-height: 26px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2e2e2e;
+  border-radius: 999px;
+  color: #2e2e2e;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.smoraboard-label {
+  background: #ffffff;
+}
+
+.smoraboard-category {
+  background: #ff7b7b;
+}
+
+.smoraboard-content {
+  position: relative;
+  z-index: 3;
+  min-height: 132px;
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) 58px;
+  align-items: center;
+  gap: 20px;
+}
+
+.smoraboard-photo-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.smoraboard-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border: 3px solid #2e2e2e;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 5px 0 rgba(46, 46, 46, 0.22);
+}
+
+.smoraboard-photo-spark {
+  position: absolute;
+  top: -9px;
+  right: -8px;
+  width: 31px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2e2e2e;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #ff7b7b;
+  box-shadow: 0 3px 0 #2e2e2e;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.smoraboard-message {
+  min-width: 0;
+  text-align: left;
+}
+
+.smoraboard-eyebrow {
+  display: block;
+  margin-bottom: 5px;
+  color: #8a6200;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.smoraboard-message h2 {
+  margin: 0 0 7px;
+  color: #2e2e2e;
+  font-size: clamp(27px, 3vw, 39px);
+  font-weight: 900;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+
+.smoraboard-message p {
+  max-width: 650px;
+  margin: 0;
+  color: #655f58;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.smoraboard-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  border: 3px solid #2e2e2e;
+  border-radius: 16px;
+  background: #ffffff;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  transform: rotate(5deg);
+}
+
+.smoraboard-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.smoraboard-decor {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  font-weight: 900;
+}
+
+.smoraboard-decor-one {
+  top: 18px;
+  right: 105px;
+  color: #ff7b7b;
+  font-size: 18px;
+  transform: rotate(12deg);
+}
+
+.smoraboard-decor-two {
+  right: 118px;
+  bottom: 18px;
+  color: #2e2e2e;
+  font-size: 8px;
+}
+
+.smoraboard-decor-three {
+  right: 76px;
+  bottom: 22px;
+  color: #ffffff;
+  font-size: 16px;
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 760px) {
+  .smoraboard {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .smoraboard-content {
+    grid-template-columns: 96px minmax(0, 1fr) 46px;
+    gap: 15px;
+    min-height: 108px;
+  }
+
+  .smoraboard-photo-wrap {
+    width: 96px;
+    height: 96px;
+  }
+
+  .smoraboard-message h2 {
+    font-size: 28px;
+  }
+
+  .smoraboard-message p {
+    font-size: 11px;
+  }
+
+  .smoraboard-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .smoraboard-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+}
+
+@media (max-width: 560px) {
+  .smoraboard {
+    margin-bottom: 26px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .smoraboard-label-row {
+    margin-bottom: 10px;
+  }
+
+  .smoraboard-label,
+  .smoraboard-category {
+    min-height: 22px;
+    padding: 0 8px;
+    border-width: 1.5px;
+    font-size: 6px;
+  }
+
+  .smoraboard-content {
+    grid-template-columns: 82px minmax(0, 1fr);
+    gap: 13px;
+    min-height: 90px;
+  }
+
+  .smoraboard-photo-wrap {
+    width: 82px;
+    height: 82px;
+  }
+
+  .smoraboard-photo {
+    border-radius: 16px;
+  }
+
+  .smoraboard-photo-spark {
+    top: -7px;
+    right: -7px;
+    width: 27px;
+    height: 27px;
+    font-size: 12px;
+  }
+
+  .smoraboard-eyebrow {
+    margin-bottom: 4px;
+    font-size: 7px;
+  }
+
+  .smoraboard-message h2 {
+    margin-bottom: 5px;
+    font-size: 20px;
+  }
+
+  .smoraboard-message p {
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .smoraboard-icon,
+  .smoraboard-decor {
+    display: none;
+  }
+}
+
+@media (max-width: 390px) {
+  .smoraboard {
+    padding: 12px;
+  }
+
+  .smoraboard-content {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .smoraboard-photo-wrap {
+    width: 72px;
+    height: 72px;
+  }
+
+  .smoraboard-message h2 {
+    font-size: 18px;
+  }
+
+  .smoraboard-message p {
+    font-size: 8px;
+  }
+}
+
 .home-updates-section {
   width: 100%;
   max-width: 1040px;
