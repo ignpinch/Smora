@@ -595,8 +595,8 @@ function HomeUpdatesSection() {
             <NewNextGraphic type="strip" />
 
             <div className="home-feature-copy">
-              <span className="home-feature-status home-feature-status-live">
-                New
+              <span className="home-feature-status home-feature-status-soon">
+                Upcoming
               </span>
 
               <h4>Make Your Own Strip Design</h4>
