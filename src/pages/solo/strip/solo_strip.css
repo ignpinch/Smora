@@ -266,11 +266,19 @@ button {
 }
 
 .solo-strip-preview {
-  width: 280px;
+  
+
+positiontion: relative;
+
+
+  width: 100%;
+
 
   aspect-ratio:
-    4 / 6;
+    4 / 3;
 
+
+ 
   padding:
     10px
     10px
