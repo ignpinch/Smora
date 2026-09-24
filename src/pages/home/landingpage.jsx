@@ -6,6 +6,7 @@ import {
 import "./home.css";
 
 import primarylogo from "../../assets/smora-primary.png";
+import josh from "../../assets/josh.jpg";
 
 function ArrowIcon({
   className = "",
@@ -262,6 +263,31 @@ function PaletteIcon({
   );
 }
 
+function SmoraBoardIcon({
+  className = "",
+}) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M5 10h14v10H5z" />
+      <path d="M4 15c1.3 1.2 2.6 1.8 3.9 1.8s2.6-.6 3.9-1.8c1.3 1.2 2.6 1.8 3.9 1.8s2.6-.6 3.9-1.8" />
+      <path d="M8 10V7" />
+      <path d="M12 10V6" />
+      <path d="M16 10V7" />
+      <path d="M8 4.5 7.4 3.4 8 2.3l.6 1.1L8 4.5Z" />
+      <path d="m12 3.5-.7-1.2L12 1l.7 1.3L12 3.5Z" />
+      <path d="m16 4.5-.6-1.1.6-1.1.6 1.1-.6 1.1Z" />
+    </svg>
+  );
+}
+
 function SoloGraphic() {
   return (
     <div className="visual-scene solo-scene">
@@ -492,6 +518,66 @@ function NewNextGraphic({
         <PaletteIcon />
       </div>
     </div>
+  );
+}
+
+function SmoraBoard() {
+  return (
+    <section className="smoraboard">
+      <div className="smoraboard-label-row">
+        <span className="smoraboard-label">
+          SmoraBoard
+        </span>
+
+        <span className="smoraboard-category">
+          Birthday
+        </span>
+      </div>
+
+      <div className="smoraboard-content">
+        <div className="smoraboard-photo-wrap">
+          <img
+            src={josh}
+            alt="Joshua Ventura"
+            className="smoraboard-photo"
+          />
+
+          <span className="smoraboard-photo-spark">
+            ✦
+          </span>
+        </div>
+
+        <div className="smoraboard-message">
+          <span className="smoraboard-eyebrow">
+            Today on Smora
+          </span>
+
+          <h2>
+            Happy Birthday, Joshua Ventura! 🎉
+          </h2>
+
+          <p>
+            Wishing you a day full of good memories, great photos, and even better moments.
+          </p>
+        </div>
+
+        <div className="smoraboard-icon">
+          <SmoraBoardIcon />
+        </div>
+      </div>
+
+      <span className="smoraboard-decor smoraboard-decor-one">
+        ✦
+      </span>
+
+      <span className="smoraboard-decor smoraboard-decor-two">
+        ●
+      </span>
+
+      <span className="smoraboard-decor smoraboard-decor-three">
+        ✦
+      </span>
+    </section>
   );
 }
 
@@ -926,6 +1012,8 @@ export default function Home({
               />
             </section>
           </section>
+
+          <SmoraBoard />
 
           <HomeUpdatesSection />
         </div>
