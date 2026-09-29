@@ -17,23 +17,71 @@ const FILTER_OPTIONS = [
     canvas: "brightness(1.06) contrast(1.08) saturate(1.12) sepia(0.12) hue-rotate(-6deg)"
   },
   {
-    id: "airy",
-    label: "Airy",
-    css: "brightness(1.14) contrast(0.92) saturate(0.9)",
-    canvas: "brightness(1.14) contrast(0.92) saturate(0.9)"
+      id: "Filter-2",
+      label: "Filter 2",
+      css: "brightness(1.116) contrast(1.135) saturate(1.458) sepia(0.148) hue-rotate(-5.72deg)",
+      canvas: "brightness(1.116) contrast(1.135) saturate(1.458) sepia(0.148) hue-rotate(-5.72deg)",
+      tuning: {
+          exposure: 0.7,
+          highlights: -46,
+          shadows: -45,
+          whites: 42,
+          blacks: 58,
+          temp: 82,
+          tint: 14,
+          vibrance: 85,
+          texture: 100,
+          clarity: 38,
+          dehaze: -29,
+          noise: 31,
+          vignette: 54,
+          details: 38
+      }
   },
-  {
-    id: "moody",
-    label: "Moody",
-    css: "brightness(0.88) contrast(1.18) saturate(0.86)",
-    canvas: "brightness(0.88) contrast(1.18) saturate(0.86)"
-  },
-  {
-    id: "pastel",
-    label: "Pastel",
-    css: "brightness(1.08) contrast(0.9) saturate(0.82) sepia(0.08)",
-    canvas: "brightness(1.08) contrast(0.9) saturate(0.82) sepia(0.08)"
-  },
+{
+    id: "filter-3",
+    label: "Filter 3",
+    css: "brightness(1.133) contrast(1.305) saturate(0.967) sepia(0.103) hue-rotate(-3.78deg)",
+    canvas: "brightness(1.133) contrast(1.305) saturate(0.967) sepia(0.103) hue-rotate(-3.78deg)",
+    tuning: {
+        exposure: 0.98,
+        highlights: 0,
+        shadows: -95,
+        whites: 17,
+        blacks: 91,
+        temp: 57,
+        tint: 13,
+        vibrance: -6,
+        texture: 0,
+        clarity: 16,
+        dehaze: 25,
+        noise: 93,
+        vignette: 0,
+        details: 0
+    }
+},
+{
+    id: "filter-4",
+    label: "Filter 4",
+    css: "brightness(1.094) contrast(1.361) saturate(0)",
+    canvas: "brightness(1.094) contrast(1.361) saturate(0)",
+    tuning: {
+        exposure: 0.68,
+        highlights: -61,
+        shadows: -42,
+        whites: 30,
+        blacks: 47,
+        temp: 0,
+        tint: 0,
+        vibrance: -100,
+        texture: -31,
+        clarity: 15,
+        dehaze: 42,
+        noise: 44,
+        vignette: 15,
+        details: 0
+    }
+},
   {
     id: "noir",
     label: "Noir",
