@@ -1429,6 +1429,12 @@ input {
     display: none;
   }
 
+  .pose-output-photo-strip-overlay {
+    object-fit: fill;
+    width: 400px;
+    height: 557px;
+  }
+
   .pose-output-current-step span,
 
   .pose-output-ready span {
@@ -1459,7 +1465,7 @@ input {
 
   .pose-output-photo-strip {
     padding: 8px;
-    width: 380px;
+    width: 100%;
   }
 
   .pose-output-photo-grid,
