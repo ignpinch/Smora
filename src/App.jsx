@@ -15,6 +15,10 @@ import PoseMatchOutput from "./pages/pose_match/pose_match_output.jsx";
 function getCurrentRoute() {
   const pathname = window.location.pathname;
 
+  if (pathname === "/pokeframe/camera") {
+    return "pokeframe-camera";
+  }
+
   if (pathname === "/pose-match/output") {
     return "pose-match-output";
   }
@@ -50,23 +54,14 @@ function getCurrentRoute() {
 }
 
 function App() {
-  const [
-    route,
-    setRoute,
-  ] = useState("home");
+  const [route, setRoute] = useState("home");
 
-  const [
-    cameraSettings,
-    setCameraSettings,
-  ] = useState({
+  const [cameraSettings, setCameraSettings] = useState({
     cameraId: "",
     mirrored: true,
   });
 
-  const [
-    soloShots,
-    setSoloShots,
-  ] = useState([]);
+  const [soloShots, setSoloShots] = useState([]);
 
   const [
     selectedPoseReferences,
@@ -79,12 +74,10 @@ function App() {
   ] = useState([]);
 
   useEffect(() => {
-    const pathname =
-      window.location.pathname;
+    const pathname = window.location.pathname;
 
     const isInternalNavigation =
-      window.history.state
-        ?.smoraNavigation === true;
+      window.history.state?.smoraNavigation === true;
 
     if (
       pathname !== "/" &&
@@ -98,15 +91,11 @@ function App() {
 
       setRoute("home");
     } else {
-      setRoute(
-        getCurrentRoute()
-      );
+      setRoute(getCurrentRoute());
     }
 
     const handlePopState = () => {
-      setRoute(
-        getCurrentRoute()
-      );
+      setRoute(getCurrentRoute());
     };
 
     window.addEventListener(
@@ -131,9 +120,7 @@ function App() {
       path
     );
 
-    setRoute(
-      getCurrentRoute()
-    );
+    setRoute(getCurrentRoute());
   };
 
   const resetCameraSettings = () => {
@@ -161,9 +148,7 @@ function App() {
     resetCameraSettings();
     setSoloShots([]);
 
-    navigate(
-      "/solo/camera"
-    );
+    navigate("/solo/camera");
   };
 
   const handlePoseMatchStart = () => {
@@ -171,18 +156,21 @@ function App() {
     setSelectedPoseReferences([]);
     setPoseMatchShots([]);
 
-    navigate(
-      "/pose-match/camera"
-    );
+    navigate("/pose-match/camera");
+  };
+
+  const handlePokeFrameStart = () => {
+    resetCameraSettings();
+    setSoloShots([]);
+
+    navigate("/pokeframe/camera");
   };
 
   const handleSoloStartOver = () => {
     resetCameraSettings();
     setSoloShots([]);
 
-    navigate(
-      "/solo/camera"
-    );
+    navigate("/solo/camera");
   };
 
   const handlePoseMatchStartOver = () => {
@@ -190,66 +178,52 @@ function App() {
     setSelectedPoseReferences([]);
     setPoseMatchShots([]);
 
-    navigate(
-      "/pose-match/camera"
-    );
+    navigate("/pose-match/camera");
   };
 
   if (route === "solo-camera") {
     return (
       <SoloCamera
-        onBack={
-          handleBackHome
-        }
-        onContinue={(
-          settings
-        ) => {
-          setCameraSettings(
-            settings
-          );
-
+        onBack={handleBackHome}
+        onContinue={(settings) => {
+          setCameraSettings(settings);
           setSoloShots([]);
 
-          navigate(
-            "/solo/photobooth"
-          );
+          navigate("/solo/photobooth");
         }}
       />
     );
   }
 
-  if (
-    route ===
-    "solo-photobooth"
-  ) {
+  if (route === "pokeframe-camera") {
+    return (
+      <SoloCamera
+        onBack={handleBackHome}
+        onContinue={(settings) => {
+          setCameraSettings(settings);
+          setSoloShots([]);
+
+          navigate("/solo/photobooth");
+        }}
+      />
+    );
+  }
+
+  if (route === "solo-photobooth") {
     return (
       <SoloPhotobooth
-        cameraId={
-          cameraSettings.cameraId
-        }
-        mirrored={
-          cameraSettings.mirrored
-        }
+        cameraId={cameraSettings.cameraId}
+        mirrored={cameraSettings.mirrored}
         selectedFilter="original"
         selectedStrip="clean"
-        initialShots={
-          soloShots
-        }
+        initialShots={soloShots}
         onBack={() => {
-          navigate(
-            "/solo/camera"
-          );
+          navigate("/solo/camera");
         }}
-        onContinue={(
-          shots
-        ) => {
-          setSoloShots(
-            shots
-          );
+        onContinue={(shots) => {
+          setSoloShots(shots);
 
-          navigate(
-            "/solo/output"
-          );
+          navigate("/solo/output");
         }}
       />
     );
@@ -258,160 +232,89 @@ function App() {
   if (route === "solo-output") {
     return (
       <SoloOutput
-        shots={
-          soloShots
-        }
+        shots={soloShots}
         selectedStrip="clean"
         onBack={() => {
-          navigate(
-            "/solo/photobooth"
-          );
+          navigate("/solo/photobooth");
         }}
-        onStartOver={
-          handleSoloStartOver
-        }
+        onStartOver={handleSoloStartOver}
       />
     );
   }
 
-  if (
-    route ===
-    "pose-match-camera"
-  ) {
+  if (route === "pose-match-camera") {
     return (
       <SoloCamera
-        onBack={
-          handleBackHome
-        }
-        onContinue={(
-          settings
-        ) => {
-          setCameraSettings(
-            settings
-          );
+        onBack={handleBackHome}
+        onContinue={(settings) => {
+          setCameraSettings(settings);
 
-          setSelectedPoseReferences(
-            []
-          );
+          setSelectedPoseReferences([]);
+          setPoseMatchShots([]);
 
-          setPoseMatchShots(
-            []
-          );
-
-          navigate(
-            "/pose-match/reference"
-          );
+          navigate("/pose-match/reference");
         }}
       />
     );
   }
 
-  if (
-    route ===
-    "pose-match-reference"
-  ) {
+  if (route === "pose-match-reference") {
     return (
       <PoseMatchReference
-        selectedPoses={
-          selectedPoseReferences
-        }
+        selectedPoses={selectedPoseReferences}
         onBack={() => {
-          navigate(
-            "/pose-match/camera"
-          );
+          navigate("/pose-match/camera");
         }}
-        onContinue={(
-          poses
-        ) => {
-          setSelectedPoseReferences(
-            poses
-          );
+        onContinue={(poses) => {
+          setSelectedPoseReferences(poses);
+          setPoseMatchShots([]);
 
-          setPoseMatchShots(
-            []
-          );
-
-          navigate(
-            "/pose-match/photobooth"
-          );
+          navigate("/pose-match/photobooth");
         }}
       />
     );
   }
 
-  if (
-    route ===
-    "pose-match-photobooth"
-  ) {
+  if (route === "pose-match-photobooth") {
     return (
       <PoseMatchPhotobooth
-        cameraId={
-          cameraSettings.cameraId
-        }
-        mirrored={
-          cameraSettings.mirrored
-        }
+        cameraId={cameraSettings.cameraId}
+        mirrored={cameraSettings.mirrored}
         selectedFilter="original"
         selectedStrip="clean"
-        selectedPoses={
-          selectedPoseReferences
-        }
-        initialShots={
-          poseMatchShots
-        }
+        selectedPoses={selectedPoseReferences}
+        initialShots={poseMatchShots}
         onBack={() => {
-          navigate(
-            "/pose-match/reference"
-          );
+          navigate("/pose-match/reference");
         }}
-        onContinue={(
-          shots
-        ) => {
-          setPoseMatchShots(
-            shots
-          );
+        onContinue={(shots) => {
+          setPoseMatchShots(shots);
 
-          navigate(
-            "/pose-match/output"
-          );
+          navigate("/pose-match/output");
         }}
       />
     );
   }
 
-  if (
-    route ===
-    "pose-match-output"
-  ) {
+  if (route === "pose-match-output") {
     return (
       <PoseMatchOutput
-        shots={
-          poseMatchShots
-        }
-        selectedPoses={
-          selectedPoseReferences
-        }
+        shots={poseMatchShots}
+        selectedPoses={selectedPoseReferences}
         selectedStrip="clean"
         onBack={() => {
-          navigate(
-            "/pose-match/photobooth"
-          );
+          navigate("/pose-match/photobooth");
         }}
-        onStartOver={
-          handlePoseMatchStartOver
-        }
+        onStartOver={handlePoseMatchStartOver}
       />
     );
   }
 
   return (
     <Home
-      onSoloContinue={
-        handleSoloStart
-      }
-      onPoseMatchContinue={
-        handlePoseMatchStart
-      }
+      onSoloContinue={handleSoloStart}
+      onPoseMatchContinue={handlePoseMatchStart}
+      onPokeFrameContinue={handlePokeFrameStart}
     />
   );
 }

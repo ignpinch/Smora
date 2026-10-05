@@ -359,7 +359,7 @@ export default function SoloCamera({ onBack, onContinue }) {
           <div className="camera-next-step">
             <div className="next-step-text">
               <span>Next</span>
-              <strong>Filter</strong>
+              <strong>Photobooth</strong>
             </div>
           </div>
         </header>
