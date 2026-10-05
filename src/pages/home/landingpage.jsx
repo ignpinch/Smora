@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import "./home.css";
 
 import primarylogo from "../../assets/smora-primary.png";
+
+import pokemonAppearSound from "../../assets/pokemon_appear.mp3";
+import darkFrame from "../../assets/PokeFrame/dark_frame.png";
+import electricFrame from "../../assets/PokeFrame/electric_frame.png";
+import fightingFrame from "../../assets/PokeFrame/fighting_frame.png";
+import fireFrame from "../../assets/PokeFrame/fire_frame.png";
 
 function ArrowIcon({ className = "" }) {
 
@@ -630,7 +636,164 @@ function NewNextGraphic({ type }) {
 
 }
 
+function PokeArrivalChibi({ type }) {
+  return (
+    <span className={`poke-arrival-chibi poke-arrival-chibi-${type}`}>
+      <i className="poke-arrival-chibi-body" />
+      <i className="poke-arrival-chibi-eye poke-arrival-chibi-eye-left" />
+      <i className="poke-arrival-chibi-eye poke-arrival-chibi-eye-right" />
+      <i className="poke-arrival-chibi-detail poke-arrival-chibi-detail-one" />
+      <i className="poke-arrival-chibi-detail poke-arrival-chibi-detail-two" />
+    </span>
+  );
+}
+
+function PokeFrameArrivalModal({
+  onClose,
+  onTry,
+  dontShowAgain,
+  onDontShowAgainChange,
+}) {
+  const handleBackdropClick = (event) => {
+    if (event.target === event.currentTarget) {
+      onClose?.(dontShowAgain);
+    }
+  };
+
+  return (
+    <div
+      className="poke-arrival-overlay"
+      role="presentation"
+      onMouseDown={handleBackdropClick}
+    >
+      <section
+        className="poke-arrival-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="poke-arrival-title"
+      >
+        <button
+          type="button"
+          className="poke-arrival-close"
+          onClick={() => {
+            onClose?.(dontShowAgain);
+          }}
+          aria-label="Close PokeFrame announcement"
+        >
+          ×
+        </button>
+
+        <span className="poke-arrival-kicker">
+          New feature
+        </span>
+
+        <div className="poke-arrival-stage" aria-hidden="true">
+          <span className="poke-arrival-bush poke-arrival-bush-left" />
+          <span className="poke-arrival-bush poke-arrival-bush-right" />
+
+          <PokeArrivalChibi type="electric" />
+          <PokeArrivalChibi type="grass" />
+          <PokeArrivalChibi type="fire" />
+
+          <div className="poke-arrival-frame-showcase">
+            <div className="poke-arrival-frame-card poke-arrival-frame-card-dark">
+              <span className="poke-arrival-frame-photo" />
+              <img
+                src={darkFrame}
+                alt=""
+                draggable="false"
+              />
+            </div>
+
+            <div className="poke-arrival-frame-card poke-arrival-frame-card-electric">
+              <span className="poke-arrival-frame-photo" />
+              <img
+                src={electricFrame}
+                alt=""
+                draggable="false"
+              />
+            </div>
+
+            <div className="poke-arrival-frame-card poke-arrival-frame-card-fighting">
+              <span className="poke-arrival-frame-photo" />
+              <img
+                src={fightingFrame}
+                alt=""
+                draggable="false"
+              />
+            </div>
+
+            <div className="poke-arrival-frame-card poke-arrival-frame-card-fire">
+              <span className="poke-arrival-frame-photo" />
+              <img
+                src={fireFrame}
+                alt=""
+                draggable="false"
+              />
+            </div>
+          </div>
+
+          <span className="poke-arrival-spark poke-arrival-spark-one">
+            ✦
+          </span>
+
+          <span className="poke-arrival-spark poke-arrival-spark-two">
+            ✦
+          </span>
+
+          <span className="poke-arrival-spark poke-arrival-spark-three">
+            ✦
+          </span>
+        </div>
+
+        <div className="poke-arrival-copy">
+          <h2 id="poke-arrival-title">
+            PokeFrame has arrived!
+          </h2>
+
+          <p>
+            A new way to turn your photo into a collectible
+            card-style memory is now live on Smora.
+          </p>
+        </div>
+
+        <label className="poke-arrival-dont-show">
+          <input
+            type="checkbox"
+            checked={dontShowAgain}
+            onChange={(event) => {
+              onDontShowAgainChange?.(
+                event.target.checked
+              );
+            }}
+          />
+
+          <span className="poke-arrival-checkbox">
+            <span />
+          </span>
+
+          <span className="poke-arrival-dont-show-copy">
+            Don't see it again
+          </span>
+        </label>
+
+        <button
+          type="button"
+          className="poke-arrival-try-button"
+          onClick={() => {
+            onTry?.(dontShowAgain);
+          }}
+        >
+          <span>Try PokeFrame</span>
+          <ArrowIcon />
+        </button>
+      </section>
+    </div>
+  );
+}
+
 function HomeUpdatesSection() {
+
   return (<section className="home-updates-section">
 
     <div className="home-updates-heading">
@@ -666,6 +829,7 @@ function HomeUpdatesSection() {
         </div>
 
         <div>
+
           <h3>Updates and improvements</h3>
 
         </div>
@@ -675,12 +839,19 @@ function HomeUpdatesSection() {
       <div className="home-improvements-empty">
 
         <div className="home-improvements-empty-copy">
+
           <strong>More improvements are on the way.</strong>
+
           <p>
-            We&apos;re polishing Smora behind the scenes. New updates and improvements will appear here as soon as they&apos;re ready.
+
+            We're polishing Smora behind the scenes. New updates and improvements will appear here as soon as they're ready.
+
           </p>
+
         </div>
+
       </div>
+
     </div>
 
     <div className="home-new-section">
@@ -860,11 +1031,15 @@ function ModeCard({ type, title, description, disabled = false, badge, onClick }
     }
 
     if (type === "pose") {
+
       return "Start Pose Match";
+
     }
 
     if (type === "pokeframe") {
+
       return "Try PokeFrame";
+
     }
 
     return "Start Photo Booth";
@@ -884,19 +1059,33 @@ function ModeCard({ type, title, description, disabled = false, badge, onClick }
     <div className="mode-status">
 
       {disabled ? (
+
         <span className="coming-soon">
+
           <LockIcon />
+
           Coming Soon
+
         </span>
+
       ) : (
+
         badge && (
+
           <span
+
             className={`mode-badge ${type === "pokeframe" ? "mode-badge-new" : ""
+
               }`}
+
           >
+
             {badge}
+
           </span>
+
         )
+
       )}
 
     </div>
@@ -954,14 +1143,262 @@ function ModeCard({ type, title, description, disabled = false, badge, onClick }
 }
 
 export default function Home({
+
   onSoloContinue,
+
   onPoseMatchContinue,
+
   onPokeFrameContinue,
+
 }) {
 
   const [visits, setVisits,] = useState(null);
 
   const [visitError, setVisitError] = useState(false);
+
+  const [shouldRunPokeArrival] = useState(() => {
+    try {
+      return (
+        window.localStorage.getItem(
+          "smora-pokeframe-arrival-hidden"
+        ) !== "1"
+      );
+    } catch {
+      return true;
+    }
+  });
+
+  const [showPokeArrival, setShowPokeArrival] = useState(false);
+  const [arrivalSequenceActive, setArrivalSequenceActive] =
+    useState(shouldRunPokeArrival);
+  const [
+    dontShowPokeArrivalAgain,
+    setDontShowPokeArrivalAgain,
+  ] = useState(false);
+
+  const pokeArrivalAudioRef = useRef(null);
+  const pokeArrivalFadeFrameRef = useRef(null);
+
+  const stopPokeArrivalSound = () => {
+    if (pokeArrivalFadeFrameRef.current) {
+      window.cancelAnimationFrame(
+        pokeArrivalFadeFrameRef.current
+      );
+      pokeArrivalFadeFrameRef.current = null;
+    }
+
+    const audio = pokeArrivalAudioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = 0;
+  };
+
+  const rememberPokeArrivalPreference = (
+    dontShowAgain
+  ) => {
+    if (!dontShowAgain) {
+      return;
+    }
+
+    try {
+      window.localStorage.setItem(
+        "smora-pokeframe-arrival-hidden",
+        "1"
+      );
+    } catch {
+      // If storage is unavailable, the modal can appear again next time.
+    }
+  };
+
+  const closePokeArrival = (
+    dontShowAgain = dontShowPokeArrivalAgain
+  ) => {
+    rememberPokeArrivalPreference(
+      dontShowAgain
+    );
+    stopPokeArrivalSound();
+    setShowPokeArrival(false);
+    setArrivalSequenceActive(false);
+  };
+
+  useEffect(() => {
+    if (!shouldRunPokeArrival) {
+      setArrivalSequenceActive(false);
+      return undefined;
+    }
+
+    let cancelled = false;
+    let startTimer = null;
+    let revealTimer = null;
+    let blockedAudioTimer = null;
+
+    const audio = new Audio(pokemonAppearSound);
+
+    audio.preload = "auto";
+    audio.volume = 0;
+    pokeArrivalAudioRef.current = audio;
+
+    const revealModal = () => {
+      if (cancelled) {
+        return;
+      }
+
+      setShowPokeArrival(true);
+    };
+
+    const fadeInSound = () => {
+      const targetVolume = 0.72;
+      const fadeDuration = 520;
+      const fadeStartedAt = performance.now();
+
+      const updateVolume = (now) => {
+        if (
+          cancelled ||
+          audio.paused ||
+          audio.ended
+        ) {
+          return;
+        }
+
+        const progress = Math.min(
+          1,
+          (now - fadeStartedAt) / fadeDuration
+        );
+
+        audio.volume =
+          targetVolume * progress;
+
+        if (progress < 1) {
+          pokeArrivalFadeFrameRef.current =
+            window.requestAnimationFrame(
+              updateVolume
+            );
+        } else {
+          pokeArrivalFadeFrameRef.current =
+            null;
+        }
+      };
+
+      pokeArrivalFadeFrameRef.current =
+        window.requestAnimationFrame(
+          updateVolume
+        );
+    };
+
+    const playPokeArrival = async () => {
+      try {
+        audio.currentTime = 0;
+        audio.volume = 0;
+
+        await audio.play();
+        fadeInSound();
+
+        /*
+         * Let the encounter sound start first, then reveal
+         * the modal almost immediately.
+         */
+        revealTimer =
+          window.setTimeout(
+            revealModal,
+            120
+          );
+      } catch (error) {
+        /*
+         * Browsers may block autoplay before the user interacts.
+         * Keep the page locked only briefly, then reveal the
+         * announcement so the user can still continue.
+         */
+        blockedAudioTimer =
+          window.setTimeout(
+            revealModal,
+            250
+          );
+      }
+    };
+
+    startTimer =
+      window.setTimeout(
+        playPokeArrival,
+        120
+      );
+
+    return () => {
+      cancelled = true;
+
+      if (startTimer) {
+        window.clearTimeout(
+          startTimer
+        );
+      }
+
+      if (revealTimer) {
+        window.clearTimeout(
+          revealTimer
+        );
+      }
+
+      if (blockedAudioTimer) {
+        window.clearTimeout(
+          blockedAudioTimer
+        );
+      }
+
+      stopPokeArrivalSound();
+
+      if (
+        pokeArrivalAudioRef.current === audio
+      ) {
+        pokeArrivalAudioRef.current = null;
+      }
+    };
+  }, [shouldRunPokeArrival]);
+
+  useEffect(() => {
+    if (!arrivalSequenceActive) {
+      return undefined;
+    }
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow =
+      "hidden";
+
+    const handleKeyDown = (event) => {
+      if (
+        event.key === "Escape" &&
+        showPokeArrival
+      ) {
+        closePokeArrival(
+          dontShowPokeArrivalAgain
+        );
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, [
+    arrivalSequenceActive,
+    showPokeArrival,
+    dontShowPokeArrivalAgain,
+  ]);
 
   useEffect(() => {
 
@@ -984,6 +1421,7 @@ export default function Home({
           method: "GET",
 
           cache: "no-store"
+
         });
 
         if (!response.ok) {
@@ -1028,91 +1466,136 @@ export default function Home({
 
   }, []);
 
-  return (<div className="smora-home">
+  const handlePokeArrivalTry = (
+    dontShowAgain = dontShowPokeArrivalAgain
+  ) => {
+    closePokeArrival(dontShowAgain);
+    onPokeFrameContinue?.();
+  };
 
-    <main className="smora-container">
+  return (
+    <div className="smora-home">
+      {arrivalSequenceActive &&
+        !showPokeArrival && (
+          <div
+            className="poke-arrival-prelock"
+            aria-hidden="true"
+          />
+        )}
 
-      <header className="brand-header">
+      {showPokeArrival && (
+        <PokeFrameArrivalModal
+          onClose={closePokeArrival}
+          onTry={handlePokeArrivalTry}
+          dontShowAgain={
+            dontShowPokeArrivalAgain
+          }
+          onDontShowAgainChange={
+            setDontShowPokeArrivalAgain
+          }
+        />
+      )}
 
-        <img src={primarylogo} alt="Smora" className="brand-logo" />
+      <main className="smora-container">
 
-        <div className="header-tools">
+        <header className="brand-header">
 
-          <div className="visit-card" aria-label="Website visits" title="Website visits">
+          <img src={primarylogo} alt="Smora" className="brand-logo" />
 
-            <EyeIcon />
+          <div className="header-tools">
 
-            <strong className="visit-count">
+            <div className="visit-card" aria-label="Website visits" title="Website visits">
 
-              {visitError
+              <EyeIcon />
 
-                ? "—"
+              <strong className="visit-count">
 
-                : visits === null
+                {visitError
 
-                  ? "..."
+                  ? "—"
 
-                  : visits.toLocaleString()}
+                  : visits === null
 
-            </strong>
+                    ? "..."
+
+                    : visits.toLocaleString()}
+
+              </strong>
+
+            </div>
+
+            <button type="button" className="download-smora-button download-smora-button-locked" aria-label="Download Smora is coming soon" title="Download Smora — Coming soon" disabled>
+
+              <LockIcon />
+
+              <span>
+
+                Download Smora
+
+              </span>
+
+            </button>
 
           </div>
 
-          <button type="button" className="download-smora-button download-smora-button-locked" aria-label="Download Smora is coming soon" title="Download Smora — Coming soon" disabled>
+        </header>
 
-            <LockIcon />
+        <div className="landing-content">
 
-            <span>
+          <section className="home-mode-section">
 
-              Download Smora
+            <section className="photo-mode-grid">
 
-            </span>
+              <ModeCard
 
-          </button>
+                type="solo"
 
-        </div>
+                title="Photo Booth"
 
-      </header>
+                description="Take photos your way and turn them into a photo strip."
 
-      <div className="landing-content">
+                badge="Popular"
 
-        <section className="home-mode-section">
+                onClick={() => onSoloContinue?.()}
 
-          <section className="photo-mode-grid">
+              />
 
-            <ModeCard
-              type="solo"
-              title="Photo Booth"
-              description="Take photos your way and turn them into a photo strip."
-              badge="Popular"
-              onClick={() => onSoloContinue?.()}
-            />
+              <ModeCard
 
-            <ModeCard
-              type="pose"
-              title="Pose Match"
-              description="Choose a pose reference, recreate it, and make your strip."
-              onClick={() => onPoseMatchContinue?.()}
-            />
+                type="pose"
 
-            <ModeCard
-              type="pokeframe"
-              title="PokeFrame"
-              description="Turn your photo into a collectible card-style frame."
-              badge="New"
-              onClick={() => onPokeFrameContinue?.()}
-            />
+                title="Pose Match"
+
+                description="Choose a pose reference, recreate it, and make your strip."
+
+                onClick={() => onPoseMatchContinue?.()}
+
+              />
+
+              <ModeCard
+
+                type="pokeframe"
+
+                title="PokeFrame"
+
+                description="Turn your photo into a collectible card-style frame."
+
+                badge="New"
+
+                onClick={() => onPokeFrameContinue?.()}
+
+              />
+
+            </section>
 
           </section>
 
-        </section>
+          <HomeUpdatesSection />
 
-        <HomeUpdatesSection />
+        </div>        <HomeFooter />
 
-      </div>        <HomeFooter />
+      </main>
 
-    </main>
-
-  </div>);
+    </div>);
 
 }
