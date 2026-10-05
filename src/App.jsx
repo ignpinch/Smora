@@ -13,9 +13,14 @@ import PoseMatchPhotobooth from "./pages/pose_match/pose_match_photobooth.jsx";
 import PoseMatchOutput from "./pages/pose_match/pose_match_output.jsx";
 
 import PokePhotobooth from "./pages/pokeframe/photobooth/poke_photobooth.jsx";
+import PokeOutput from "./pages/pokeframe/output/poke_output.jsx";
 
 function getCurrentRoute() {
   const pathname = window.location.pathname;
+
+  if (pathname === "/pokeframe/output") {
+    return "pokeframe-output";
+  }
 
   if (pathname === "/pokeframe/photobooth") {
     return "pokeframe-photobooth";
@@ -193,6 +198,13 @@ function App() {
     navigate("/pose-match/camera");
   };
 
+  const handlePokeFrameStartOver = () => {
+    resetCameraSettings();
+    setPokeFramePhoto("");
+
+    navigate("/pokeframe/camera");
+  };
+
   if (route === "solo-camera") {
     return (
       <SoloCamera
@@ -333,11 +345,20 @@ function App() {
         onContinue={(photo) => {
           setPokeFramePhoto(photo);
 
-          console.log(
-            "PokeFrame photo ready:",
-            photo
-          );
+          navigate("/pokeframe/output");
         }}
+      />
+    );
+  }
+
+  if (route === "pokeframe-output") {
+    return (
+      <PokeOutput
+        photo={pokeFramePhoto}
+        onBack={() => {
+          navigate("/pokeframe/photobooth");
+        }}
+        onStartOver={handlePokeFrameStartOver}
       />
     );
   }

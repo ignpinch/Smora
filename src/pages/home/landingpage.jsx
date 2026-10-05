@@ -666,9 +666,6 @@ function HomeUpdatesSection() {
         </div>
 
         <div>
-
-          <span>Updates & Improvements</span>
-
           <h3>Updates and improvements</h3>
 
         </div>
@@ -676,9 +673,6 @@ function HomeUpdatesSection() {
       </div>
 
       <div className="home-improvements-empty">
-        <div className="home-improvements-empty-icon">
-          <SparklesIcon />
-        </div>
 
         <div className="home-improvements-empty-copy">
           <strong>More improvements are on the way.</strong>

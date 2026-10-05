@@ -3159,8 +3159,8 @@ button {
 }
 
 .home-improvements-empty-copy {
-  max-width: 620px;
-  text-align: left;
+  width: 100%;
+  text-align: center;
 }
 
 .home-improvements-empty-copy strong {
