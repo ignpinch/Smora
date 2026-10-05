@@ -12,8 +12,14 @@ import PoseMatchReference from "./pages/pose_match/pose_match_reference.jsx";
 import PoseMatchPhotobooth from "./pages/pose_match/pose_match_photobooth.jsx";
 import PoseMatchOutput from "./pages/pose_match/pose_match_output.jsx";
 
+import PokePhotobooth from "./pages/pokeframe/photobooth/poke_phoobooth.jsx";
+
 function getCurrentRoute() {
   const pathname = window.location.pathname;
+
+  if (pathname === "/pokeframe/photobooth") {
+    return "pokeframe-photobooth";
+  }
 
   if (pathname === "/pokeframe/camera") {
     return "pokeframe-camera";
@@ -72,6 +78,11 @@ function App() {
     poseMatchShots,
     setPoseMatchShots,
   ] = useState([]);
+
+  const [
+    pokeFramePhoto,
+    setPokeFramePhoto,
+  ] = useState("");
 
   useEffect(() => {
     const pathname = window.location.pathname;
@@ -134,6 +145,7 @@ function App() {
     setSoloShots([]);
     setSelectedPoseReferences([]);
     setPoseMatchShots([]);
+    setPokeFramePhoto("");
 
     window.history.pushState(
       {},
@@ -161,7 +173,7 @@ function App() {
 
   const handlePokeFrameStart = () => {
     resetCameraSettings();
-    setSoloShots([]);
+    setPokeFramePhoto("");
 
     navigate("/pokeframe/camera");
   };
@@ -182,20 +194,6 @@ function App() {
   };
 
   if (route === "solo-camera") {
-    return (
-      <SoloCamera
-        onBack={handleBackHome}
-        onContinue={(settings) => {
-          setCameraSettings(settings);
-          setSoloShots([]);
-
-          navigate("/solo/photobooth");
-        }}
-      />
-    );
-  }
-
-  if (route === "pokeframe-camera") {
     return (
       <SoloCamera
         onBack={handleBackHome}
@@ -306,6 +304,40 @@ function App() {
           navigate("/pose-match/photobooth");
         }}
         onStartOver={handlePoseMatchStartOver}
+      />
+    );
+  }
+
+  if (route === "pokeframe-camera") {
+    return (
+      <SoloCamera
+        onBack={handleBackHome}
+        onContinue={(settings) => {
+          setCameraSettings(settings);
+          setPokeFramePhoto("");
+
+          navigate("/pokeframe/photobooth");
+        }}
+      />
+    );
+  }
+
+  if (route === "pokeframe-photobooth") {
+    return (
+      <PokePhotobooth
+        cameraId={cameraSettings.cameraId}
+        mirrored={cameraSettings.mirrored}
+        onBack={() => {
+          navigate("/pokeframe/camera");
+        }}
+        onContinue={(photo) => {
+          setPokeFramePhoto(photo);
+
+          console.log(
+            "PokeFrame photo ready:",
+            photo
+          );
+        }}
       />
     );
   }
