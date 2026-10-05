@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import "./poke_photobooth.css";
+import "../../solo/photobooth/solo_photobooth.css";
 
 const COUNTDOWN_SECONDS = 5;
 
@@ -16,22 +17,6 @@ function ArrowLeftIcon() {
     >
       <path d="M19 12H5" />
       <path d="m11 18-6-6 6-6" />
-    </svg>
-  );
-}
-
-function CameraIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 7h3l1.4-2h7.2L17 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
-      <circle cx="12" cy="13" r="4" />
     </svg>
   );
 }
@@ -98,18 +83,18 @@ function MinimizeIcon() {
   );
 }
 
-function SparklesIcon() {
+function CameraIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2.2"
+      strokeWidth="2.3"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="m12 3 1.25 3.75L17 8l-3.75 1.25L12 13l-1.25-3.75L7 8l3.75-1.25L12 3Z" />
-      <path d="m18.5 14 .7 2.3 2.3.7-2.3.7-.7 2.3-.7-2.3-2.3-.7 2.3-.7.7-2.3Z" />
+      <path d="M4 7h3l1.4-2h7.2L17 7h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+      <circle cx="12" cy="13" r="4" />
     </svg>
   );
 }
@@ -130,14 +115,14 @@ export default function PokePhotobooth({
   const streamRef = useRef(null);
   const cameraScreenRef = useRef(null);
   const audioContextRef = useRef(null);
-  const captureTokenRef = useRef(0);
+  const sessionTokenRef = useRef(0);
 
   const [cameraError, setCameraError] = useState("");
   const [countdown, setCountdown] = useState(null);
   const [capturedPhoto, setCapturedPhoto] = useState("");
-  const [isCapturing, setIsCapturing] = useState(false);
-  const [flash, setFlash] = useState(false);
+  const [isShooting, setIsShooting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [flash, setFlash] = useState(false);
 
   const stopCamera = () => {
     if (streamRef.current) {
@@ -221,7 +206,11 @@ export default function PokePhotobooth({
     return audioContextRef.current;
   };
 
-  const playTone = async (frequency, duration, volume = 0.12) => {
+  const playTone = async (
+    frequency,
+    duration,
+    volume = 0.13
+  ) => {
     const context = await getAudioContext();
     const oscillator = context.createOscillator();
     const gain = context.createGain();
@@ -229,7 +218,11 @@ export default function PokePhotobooth({
     oscillator.type = "sine";
     oscillator.frequency.value = frequency;
 
-    gain.gain.setValueAtTime(volume, context.currentTime);
+    gain.gain.setValueAtTime(
+      volume,
+      context.currentTime
+    );
+
     gain.gain.exponentialRampToValueAtTime(
       0.001,
       context.currentTime + duration
@@ -239,53 +232,92 @@ export default function PokePhotobooth({
     gain.connect(context.destination);
 
     oscillator.start();
-    oscillator.stop(context.currentTime + duration);
+    oscillator.stop(
+      context.currentTime + duration
+    );
   };
 
   const playCountdownSound = async (number) => {
-    await playTone(number === 1 ? 980 : 700, 0.1);
+    const frequency =
+      number === 1 ? 1000 : 720;
+
+    await playTone(
+      frequency,
+      0.1,
+      0.12
+    );
   };
 
   const playShutterSound = async () => {
     const context = await getAudioContext();
-    const bufferSize = Math.floor(context.sampleRate * 0.1);
+    const bufferSize = Math.floor(
+      context.sampleRate * 0.12
+    );
+
     const buffer = context.createBuffer(
       1,
       bufferSize,
       context.sampleRate
     );
+
     const data = buffer.getChannelData(0);
 
-    for (let index = 0; index < bufferSize; index += 1) {
-      const fade = 1 - index / bufferSize;
+    for (
+      let index = 0;
+      index < bufferSize;
+      index += 1
+    ) {
+      const fade =
+        1 - index / bufferSize;
 
-      data[index] = (Math.random() * 2 - 1) * fade;
+      data[index] =
+        (Math.random() * 2 - 1) *
+        fade;
     }
 
-    const source = context.createBufferSource();
-    const gain = context.createGain();
+    const source =
+      context.createBufferSource();
+
+    const gain =
+      context.createGain();
 
     source.buffer = buffer;
-    gain.gain.value = 0.2;
+    gain.gain.value = 0.22;
 
     source.connect(gain);
     gain.connect(context.destination);
 
     source.start();
+
+    await playTone(
+      150,
+      0.07,
+      0.09
+    );
   };
 
   const capturePhoto = () => {
     const video = videoRef.current;
 
-    if (!video || !video.videoWidth || !video.videoHeight) {
+    if (
+      !video ||
+      !video.videoWidth ||
+      !video.videoHeight
+    ) {
       return "";
     }
 
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
+    const canvas =
+      document.createElement("canvas");
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    canvas.width =
+      video.videoWidth;
+
+    canvas.height =
+      video.videoHeight;
+
+    const context =
+      canvas.getContext("2d");
 
     if (!context) {
       return "";
@@ -294,8 +326,15 @@ export default function PokePhotobooth({
     context.save();
 
     if (mirrored) {
-      context.translate(canvas.width, 0);
-      context.scale(-1, 1);
+      context.translate(
+        canvas.width,
+        0
+      );
+
+      context.scale(
+        -1,
+        1
+      );
     }
 
     context.drawImage(
@@ -308,49 +347,70 @@ export default function PokePhotobooth({
 
     context.restore();
 
-    return canvas.toDataURL("image/jpeg", 0.95);
+    return canvas.toDataURL(
+      "image/jpeg",
+      0.94
+    );
   };
 
-  const handleTakePhoto = async () => {
+  const takePhoto = async () => {
     if (
-      isCapturing ||
-      cameraError ||
-      !videoRef.current?.videoWidth
+      isShooting ||
+      cameraError
+    ) {
+      return;
+    }
+
+    if (
+      !videoRef.current ||
+      !videoRef.current.videoWidth
     ) {
       return;
     }
 
     await getAudioContext();
 
-    const token = captureTokenRef.current + 1;
+    const token =
+      sessionTokenRef.current + 1;
 
-    captureTokenRef.current = token;
+    sessionTokenRef.current =
+      token;
 
     setCapturedPhoto("");
-    setIsCapturing(true);
+    setCountdown(null);
+    setIsShooting(true);
 
     for (
       let number = COUNTDOWN_SECONDS;
       number >= 1;
       number -= 1
     ) {
-      if (captureTokenRef.current !== token) {
+      if (
+        sessionTokenRef.current !== token
+      ) {
         return;
       }
 
       setCountdown(number);
-      await playCountdownSound(number);
+
+      await playCountdownSound(
+        number
+      );
+
       await delay(1000);
     }
 
-    if (captureTokenRef.current !== token) {
+    if (
+      sessionTokenRef.current !== token
+    ) {
       return;
     }
 
     setCountdown(null);
     setFlash(true);
 
-    const photo = capturePhoto();
+    const photo =
+      capturePhoto();
 
     playShutterSound();
 
@@ -358,18 +418,23 @@ export default function PokePhotobooth({
       setCapturedPhoto(photo);
     }
 
-    await delay(150);
+    await delay(160);
 
     setFlash(false);
-    setIsCapturing(false);
+
+    if (
+      sessionTokenRef.current === token
+    ) {
+      setIsShooting(false);
+    }
   };
 
   const handleRetake = () => {
-    if (isCapturing) {
+    if (isShooting) {
       return;
     }
 
-    captureTokenRef.current += 1;
+    sessionTokenRef.current += 1;
 
     setCountdown(null);
     setFlash(false);
@@ -381,15 +446,17 @@ export default function PokePhotobooth({
       return;
     }
 
-    captureTokenRef.current += 1;
+    sessionTokenRef.current += 1;
 
+    setIsShooting(false);
     setCountdown(null);
-    setIsCapturing(false);
 
     stopCamera();
 
     if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
+      document
+        .exitFullscreen()
+        .catch(() => {});
     }
 
     onContinue?.(capturedPhoto);
@@ -408,15 +475,17 @@ export default function PokePhotobooth({
   };
 
   const handleBack = () => {
-    captureTokenRef.current += 1;
+    sessionTokenRef.current += 1;
 
     setCountdown(null);
-    setIsCapturing(false);
+    setIsShooting(false);
 
     stopCamera();
 
     if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
+      document
+        .exitFullscreen()
+        .catch(() => {});
     }
 
     onBack?.();
@@ -427,24 +496,33 @@ export default function PokePhotobooth({
 
     const initializeCamera = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: getVideoConstraints(),
-          audio: false,
-        });
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            video:
+              getVideoConstraints(),
+            audio: false,
+          });
 
         if (!mounted) {
-          stream.getTracks().forEach((track) => {
-            track.stop();
-          });
+          stream
+            .getTracks()
+            .forEach((track) => {
+              track.stop();
+            });
 
           return;
         }
 
-        streamRef.current = stream;
+        streamRef.current =
+          stream;
 
         if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play().catch(() => {});
+          videoRef.current.srcObject =
+            stream;
+
+          videoRef.current
+            .play()
+            .catch(() => {});
         }
 
         setCameraError("");
@@ -461,19 +539,26 @@ export default function PokePhotobooth({
 
     return () => {
       mounted = false;
-      captureTokenRef.current += 1;
+
+      sessionTokenRef.current += 1;
 
       stopCamera();
 
       if (audioContextRef.current) {
-        audioContextRef.current.close().catch(() => {});
+        audioContextRef.current
+          .close()
+          .catch(() => {});
       }
     };
   }, [cameraId]);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
+      setIsFullscreen(
+        Boolean(
+          document.fullscreenElement
+        )
+      );
     };
 
     document.addEventListener(
@@ -489,34 +574,39 @@ export default function PokePhotobooth({
     };
   }, []);
 
+  const finished =
+    Boolean(capturedPhoto) &&
+    !isShooting;
+
   return (
-    <div className="poke-photobooth-page">
-      <main className="poke-photobooth-container">
-        <header className="poke-photobooth-header">
+    <div className="solo-photobooth-page">
+      <main className="solo-photobooth-container">
+        <header className="solo-photobooth-header">
           <button
             type="button"
-            className="poke-photobooth-back"
+            className="photobooth-back-button"
             onClick={handleBack}
           >
             <ArrowLeftIcon />
             <span>Back</span>
           </button>
 
-          <div className="poke-photobooth-title">
+          <div className="photobooth-current-step">
             <span>PokeFrame</span>
-            <strong>Take your photo</strong>
+            <strong>Photobooth</strong>
           </div>
 
-          <div className="poke-photobooth-step">
-            <SparklesIcon />
-            <span>1 photo</span>
+          <div className="photobooth-shot-count">
+            <strong>
+              {capturedPhoto ? "1/1" : "0/1"}
+            </strong>
           </div>
         </header>
 
-        <section className="poke-photobooth-content">
+        <section className="solo-photobooth-content">
           <div
             ref={cameraScreenRef}
-            className="poke-camera-screen"
+            className="photobooth-camera-screen"
           >
             {!cameraError && (
               <video
@@ -524,21 +614,27 @@ export default function PokePhotobooth({
                 autoPlay
                 muted
                 playsInline
-                className={`poke-camera-video ${
-                  mirrored ? "poke-camera-mirrored" : ""
+                className={`photobooth-camera-video ${
+                  mirrored
+                    ? "photobooth-camera-mirrored"
+                    : ""
                 }`}
               />
             )}
 
             {cameraError && (
-              <div className="poke-camera-error">
-                <div className="poke-camera-error-icon">
+              <div className="photobooth-camera-error">
+                <div className="photobooth-error-icon">
                   <CameraIcon />
                 </div>
 
-                <strong>Camera access needed</strong>
+                <strong>
+                  Camera access needed
+                </strong>
 
-                <p>{cameraError}</p>
+                <p>
+                  {cameraError}
+                </p>
 
                 <button
                   type="button"
@@ -581,9 +677,28 @@ export default function PokePhotobooth({
               </div>
             </div>
 
+            {!cameraError &&
+              countdown && (
+                <div className="photobooth-countdown">
+                  <span>
+                    {countdown}
+                  </span>
+
+                  <small>
+                    {countdown === 1
+                      ? "Smile!"
+                      : "Get ready"}
+                  </small>
+                </div>
+              )}
+
+            {flash && (
+              <div className="photobooth-flash" />
+            )}
+
             <button
               type="button"
-              className="poke-fullscreen-button"
+              className="photobooth-fullscreen-button"
               onClick={toggleFullscreen}
               aria-label={
                 isFullscreen
@@ -604,60 +719,40 @@ export default function PokePhotobooth({
               </span>
             </button>
 
-            {!cameraError && countdown && (
-              <div className="poke-countdown">
-                <span>{countdown}</span>
-                <small>
-                  {countdown === 1
-                    ? "Smile!"
-                    : "Get ready"}
-                </small>
-              </div>
-            )}
-
-            {flash && (
-              <div className="poke-camera-flash" />
-            )}
-
-            {!cameraError && !capturedPhoto && (
-              <div className="poke-camera-actions">
+            {!cameraError &&
+              !isShooting &&
+              !capturedPhoto && (
                 <button
                   type="button"
-                  className="poke-capture-button"
-                  onClick={handleTakePhoto}
-                  disabled={isCapturing}
+                  className="photobooth-start-button"
+                  onClick={takePhoto}
                 >
-                  <span>
-                    {isCapturing
-                      ? "Taking photo..."
-                      : "Start"}
-                  </span>
+                  Take Photo
                 </button>
+              )}
+
+            {finished && (
+              <div className="photobooth-finished-overlay">
+                <div className="photobooth-result-actions">
+                  <button
+                    type="button"
+                    className="photobooth-again-button"
+                    onClick={handleRetake}
+                  >
+                    <RefreshIcon />
+                    Retake
+                  </button>
+
+                  <button
+                    type="button"
+                    className="photobooth-download-button"
+                    onClick={handleContinue}
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
             )}
-
-            {!cameraError && capturedPhoto && (
-              <div className="poke-camera-actions poke-camera-actions-result">
-                <button
-                  type="button"
-                  className="poke-retake-button"
-                  onClick={handleRetake}
-                >
-                  <RefreshIcon />
-                  Retake
-                </button>
-
-                <button
-                  type="button"
-                  className="poke-continue-button"
-                  onClick={handleContinue}
-                >
-                  Continue
-                  <span>→</span>
-                </button>
-              </div>
-            )}
-
           </div>
         </section>
       </main>
