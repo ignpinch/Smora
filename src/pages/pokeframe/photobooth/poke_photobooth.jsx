@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import "./poke_photobooth.css";
 
 const COUNTDOWN_SECONDS = 5;
+const INTRO_DIALOGUE_FIRST = "A wild memory appeared!";
+const INTRO_DIALOGUE_SECOND = "Press CAPTURE when you're ready.";
+const INTRO_DIALOGUE = `${INTRO_DIALOGUE_FIRST}\n${INTRO_DIALOGUE_SECOND}`;
+const RESULT_DIALOGUE_FIRST = "Gotcha! Your memory was caught.";
+const RESULT_DIALOGUE_SECOND = "Keep it or try again?";
+const RESULT_DIALOGUE = `${RESULT_DIALOGUE_FIRST}\n${RESULT_DIALOGUE_SECOND}`;
+const DIALOGUE_TYPE_SPEED = 34;
+const DIALOGUE_START_DELAY = 280;
 function ArrowLeftIcon() {
   return (
     <svg
@@ -121,12 +129,17 @@ export default function PokePhotobooth({
   const cameraScreenRef = useRef(null);
   const audioContextRef = useRef(null);
   const sessionTokenRef = useRef(0);
+  const dialogueTimerRef = useRef(null);
+  const resultDialogueTimerRef = useRef(null);
   const [cameraError, setCameraError] = useState("");
   const [countdown, setCountdown] = useState(null);
   const [capturedPhoto, setCapturedPhoto] = useState("");
   const [isShooting, setIsShooting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [flash, setFlash] = useState(false);
+  const [typedIntroDialogue, setTypedIntroDialogue] = useState("");
+  const [typedResultDialogue, setTypedResultDialogue] = useState("");
+  const [dialogueCycle, setDialogueCycle] = useState(0);
   const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => {
@@ -219,6 +232,217 @@ export default function PokePhotobooth({
       context.currentTime + duration
     );
   };
+
+  const playDialogueTypingSound = (character, index) => {
+    if (
+      !character ||
+      character === " " ||
+      character === "\n"
+    ) {
+      return;
+    }
+
+    const frequency =
+      760 + (index % 4) * 45;
+
+    playTone(
+      frequency,
+      0.035,
+      0.075
+    ).catch(() => { });
+  };
+
+  useEffect(() => {
+    if (
+      cameraError ||
+      isShooting ||
+      capturedPhoto
+    ) {
+      return undefined;
+    }
+
+    const prefersReducedMotion =
+      window.matchMedia?.(
+        "(prefers-reduced-motion: reduce)"
+      )?.matches;
+
+    if (prefersReducedMotion) {
+      setTypedIntroDialogue(INTRO_DIALOGUE);
+      return undefined;
+    }
+
+    let characterIndex = 0;
+    let cancelled = false;
+
+    setTypedIntroDialogue("");
+
+    const typeNextCharacter = () => {
+      if (cancelled) {
+        return;
+      }
+
+      const character =
+        INTRO_DIALOGUE[characterIndex];
+
+      if (character === undefined) {
+        return;
+      }
+
+      characterIndex += 1;
+
+      setTypedIntroDialogue(
+        INTRO_DIALOGUE.slice(
+          0,
+          characterIndex
+        )
+      );
+
+      playDialogueTypingSound(
+        character,
+        characterIndex
+      );
+
+      if (
+        characterIndex <
+        INTRO_DIALOGUE.length
+      ) {
+        const extraPause =
+          character === "!" ||
+            character === "."
+            ? 150
+            : character === "\n"
+              ? 180
+              : 0;
+
+        dialogueTimerRef.current =
+          window.setTimeout(
+            typeNextCharacter,
+            DIALOGUE_TYPE_SPEED +
+            extraPause
+          );
+      }
+    };
+
+    dialogueTimerRef.current =
+      window.setTimeout(
+        typeNextCharacter,
+        DIALOGUE_START_DELAY
+      );
+
+    return () => {
+      cancelled = true;
+
+      if (dialogueTimerRef.current) {
+        window.clearTimeout(
+          dialogueTimerRef.current
+        );
+        dialogueTimerRef.current = null;
+      }
+    };
+  }, [
+    cameraError,
+    capturedPhoto,
+    dialogueCycle,
+    isShooting,
+  ]);
+
+  useEffect(() => {
+    if (
+      cameraError ||
+      isShooting ||
+      !capturedPhoto
+    ) {
+      setTypedResultDialogue("");
+      return undefined;
+    }
+
+    const prefersReducedMotion =
+      window.matchMedia?.(
+        "(prefers-reduced-motion: reduce)"
+      )?.matches;
+
+    if (prefersReducedMotion) {
+      setTypedResultDialogue(RESULT_DIALOGUE);
+      return undefined;
+    }
+
+    let characterIndex = 0;
+    let cancelled = false;
+
+    setTypedResultDialogue("");
+
+    const typeNextCharacter = () => {
+      if (cancelled) {
+        return;
+      }
+
+      const character =
+        RESULT_DIALOGUE[characterIndex];
+
+      if (character === undefined) {
+        return;
+      }
+
+      characterIndex += 1;
+
+      setTypedResultDialogue(
+        RESULT_DIALOGUE.slice(
+          0,
+          characterIndex
+        )
+      );
+
+      playDialogueTypingSound(
+        character,
+        characterIndex
+      );
+
+      if (
+        characterIndex <
+        RESULT_DIALOGUE.length
+      ) {
+        const extraPause =
+          character === "!" ||
+            character === "."
+            ? 150
+            : character === "\n"
+              ? 180
+              : 0;
+
+        resultDialogueTimerRef.current =
+          window.setTimeout(
+            typeNextCharacter,
+            DIALOGUE_TYPE_SPEED +
+            extraPause
+          );
+      }
+    };
+
+    resultDialogueTimerRef.current =
+      window.setTimeout(
+        typeNextCharacter,
+        DIALOGUE_START_DELAY
+      );
+
+    return () => {
+      cancelled = true;
+
+      if (
+        resultDialogueTimerRef.current
+      ) {
+        window.clearTimeout(
+          resultDialogueTimerRef.current
+        );
+        resultDialogueTimerRef.current =
+          null;
+      }
+    };
+  }, [
+    cameraError,
+    capturedPhoto,
+    isShooting,
+  ]);
+
   const playCountdownSound = async (number) => {
     const frequency =
       number === 1 ? 980 : 660;
@@ -368,6 +592,10 @@ export default function PokePhotobooth({
     setCountdown(null);
     setFlash(false);
     setCapturedPhoto("");
+    setDialogueCycle(
+      (currentCycle) =>
+        currentCycle + 1
+    );
   };
   const handleContinue = () => {
     if (!capturedPhoto) {
@@ -667,9 +895,24 @@ export default function PokePhotobooth({
                       ▶
                     </span>
                     <p>
-                      A wild memory appeared!
-                      <br />
-                      Press CAPTURE when you're ready.
+                      {typedIntroDialogue
+                        .split("\n")
+                        .map(
+                          (
+                            line,
+                            lineIndex
+                          ) => (
+                            <span
+                              key={`${lineIndex}-${line}`}
+                            >
+                              {line}
+                              {lineIndex === 0 &&
+                                typedIntroDialogue.includes(
+                                  "\n"
+                                ) && <br />}
+                            </span>
+                          )
+                        )}
                     </p>
                   </div>
                   <button
@@ -694,9 +937,24 @@ export default function PokePhotobooth({
                     ▶
                   </span>
                   <p>
-                    Gotcha! Your memory was caught.
-                    <br />
-                    Keep it or try again?
+                    {typedResultDialogue
+                      .split("\n")
+                      .map(
+                        (
+                          line,
+                          lineIndex
+                        ) => (
+                          <span
+                            key={`${lineIndex}-${line}`}
+                          >
+                            {line}
+                            {lineIndex === 0 &&
+                              typedResultDialogue.includes(
+                                "\n"
+                              ) && <br />}
+                          </span>
+                        )
+                      )}
                   </p>
                 </div>
                 <div className="poke-result-actions">

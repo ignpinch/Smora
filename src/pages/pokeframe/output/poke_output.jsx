@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 
 import "./poke_output.css";
 
+import smoraPrimary from "../../../assets/smora-primary.png";
+
 import darkFrame from "../../../assets/PokeFrame/dark_frame.png";
 
 import electricFrame from "../../../assets/PokeFrame/electric_frame.png";
@@ -13,6 +15,37 @@ import fireFrame from "../../../assets/PokeFrame/fire_frame.png";
 const CARD_WIDTH = 750;
 
 const CARD_HEIGHT = 1050;
+
+const STORY_WIDTH = 1080;
+const STORY_HEIGHT = 1920;
+const STORY_FONT = '"Courier New", "Lucida Console", monospace';
+
+const STORY_THEMES = {
+  dark: {
+    accent: "#303030",
+    accentDark: "#202020",
+    highlight: "#f7d154",
+    secondary: "#4f77b8",
+  },
+  electric: {
+    accent: "#f7d154",
+    accentDark: "#b98c16",
+    highlight: "#fff4a8",
+    secondary: "#4f77b8",
+  },
+  fighting: {
+    accent: "#df7654",
+    accentDark: "#9f3e29",
+    highlight: "#f7d154",
+    secondary: "#4f77b8",
+  },
+  fire: {
+    accent: "#f08b48",
+    accentDark: "#b84b2f",
+    highlight: "#f7d154",
+    secondary: "#df4a4a",
+  },
+};
 
 const PHOTO_WINDOW = {
 
@@ -824,6 +857,315 @@ function wrapText(
 
 }
 
+function roundedRectPath(context, x, y, width, height, radius) {
+  const safeRadius = Math.min(radius, width / 2, height / 2);
+
+  context.beginPath();
+  context.moveTo(x + safeRadius, y);
+  context.lineTo(x + width - safeRadius, y);
+  context.quadraticCurveTo(x + width, y, x + width, y + safeRadius);
+  context.lineTo(x + width, y + height - safeRadius);
+  context.quadraticCurveTo(
+    x + width,
+    y + height,
+    x + width - safeRadius,
+    y + height
+  );
+  context.lineTo(x + safeRadius, y + height);
+  context.quadraticCurveTo(x, y + height, x, y + height - safeRadius);
+  context.lineTo(x, y + safeRadius);
+  context.quadraticCurveTo(x, y, x + safeRadius, y);
+  context.closePath();
+}
+
+function drawPixelGrid(context) {
+  context.save();
+  context.strokeStyle = "rgba(32, 32, 32, 0.055)";
+  context.lineWidth = 2;
+
+  for (let x = 0; x <= STORY_WIDTH; x += 36) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, STORY_HEIGHT);
+    context.stroke();
+  }
+
+  for (let y = 0; y <= STORY_HEIGHT; y += 36) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(STORY_WIDTH, y);
+    context.stroke();
+  }
+
+  context.restore();
+}
+
+function drawPixelBall(context, x, y, size, rotation = 0) {
+  const radius = size / 2;
+
+  context.save();
+  context.translate(x, y);
+  context.rotate(rotation);
+
+  context.fillStyle = "#ffffff";
+  context.strokeStyle = "#202020";
+  context.lineWidth = Math.max(5, size * 0.08);
+
+  context.beginPath();
+  context.arc(0, 0, radius, 0, Math.PI * 2);
+  context.fill();
+  context.stroke();
+
+  context.save();
+  context.beginPath();
+  context.arc(0, 0, radius - context.lineWidth / 2, Math.PI, Math.PI * 2);
+  context.clip();
+  context.fillStyle = "#df4a4a";
+  context.fillRect(-radius, -radius, size, radius);
+  context.restore();
+
+  context.fillStyle = "#202020";
+  context.fillRect(
+    -radius + context.lineWidth * 0.35,
+    -context.lineWidth / 2,
+    size - context.lineWidth * 0.7,
+    context.lineWidth
+  );
+
+  context.fillStyle = "#ffffff";
+  context.beginPath();
+  context.arc(0, 0, size * 0.13, 0, Math.PI * 2);
+  context.fill();
+  context.stroke();
+
+  context.restore();
+}
+
+function drawPixelSparkle(context, x, y, size, color) {
+  const unit = size / 5;
+
+  context.save();
+  context.fillStyle = color;
+
+  context.fillRect(x - unit / 2, y - size / 2, unit, size);
+  context.fillRect(x - size / 2, y - unit / 2, size, unit);
+  context.fillRect(x - unit * 1.5, y - unit * 1.5, unit, unit);
+  context.fillRect(x + unit * 0.5, y + unit * 0.5, unit, unit);
+
+  context.restore();
+}
+
+function drawChibiFace(context, fillColor) {
+  context.fillStyle = fillColor;
+  context.strokeStyle = "#202020";
+  context.lineWidth = 4;
+
+  roundedRectPath(context, -24, -20, 48, 42, 14);
+  context.fill();
+  context.stroke();
+
+  context.fillStyle = "#202020";
+  context.fillRect(-13, -6, 5, 7);
+  context.fillRect(8, -6, 5, 7);
+
+  context.fillStyle = "#df4a4a";
+  context.fillRect(-20, 6, 7, 5);
+  context.fillRect(13, 6, 7, 5);
+
+  context.strokeStyle = "#202020";
+  context.lineWidth = 3;
+  context.beginPath();
+  context.moveTo(-4, 8);
+  context.lineTo(0, 12);
+  context.lineTo(5, 8);
+  context.stroke();
+
+  context.fillStyle = "#202020";
+  context.fillRect(-17, 21, 12, 6);
+  context.fillRect(5, 21, 12, 6);
+}
+
+function drawElectricChibi(context, x, y, scale = 1) {
+  context.save();
+  context.translate(x, y);
+  context.scale(scale, scale);
+
+  context.strokeStyle = "#202020";
+  context.lineWidth = 4;
+  context.fillStyle = "#f7d154";
+
+  context.save();
+  context.translate(-12, -28);
+  context.rotate(-0.25);
+  context.fillRect(-6, -17, 12, 24);
+  context.strokeRect(-6, -17, 12, 24);
+  context.fillStyle = "#202020";
+  context.fillRect(-6, -17, 12, 8);
+  context.restore();
+
+  context.save();
+  context.translate(12, -28);
+  context.rotate(0.25);
+  context.fillStyle = "#f7d154";
+  context.fillRect(-6, -17, 12, 24);
+  context.strokeRect(-6, -17, 12, 24);
+  context.fillStyle = "#202020";
+  context.fillRect(-6, -17, 12, 8);
+  context.restore();
+
+  drawChibiFace(context, "#f7d154");
+
+  context.fillStyle = "#f7d154";
+  context.strokeStyle = "#202020";
+  context.lineWidth = 4;
+  context.save();
+  context.translate(31, 3);
+  context.rotate(-0.42);
+  context.fillRect(-3, -4, 24, 9);
+  context.strokeRect(-3, -4, 24, 9);
+  context.fillRect(16, -13, 10, 9);
+  context.strokeRect(16, -13, 10, 9);
+  context.restore();
+
+  context.restore();
+}
+
+function drawGrassChibi(context, x, y, scale = 1) {
+  context.save();
+  context.translate(x, y);
+  context.scale(scale, scale);
+
+  context.strokeStyle = "#202020";
+  context.lineWidth = 4;
+
+  context.fillStyle = "#5f9b4b";
+  context.beginPath();
+  context.ellipse(0, -26, 19, 16, 0, 0, Math.PI * 2);
+  context.fill();
+  context.stroke();
+
+  context.fillStyle = "#77a956";
+  context.save();
+  context.translate(-10, -41);
+  context.rotate(-0.45);
+  context.fillRect(-5, -11, 10, 18);
+  context.strokeRect(-5, -11, 10, 18);
+  context.restore();
+
+  context.save();
+  context.translate(10, -41);
+  context.rotate(0.45);
+  context.fillRect(-5, -11, 10, 18);
+  context.strokeRect(-5, -11, 10, 18);
+  context.restore();
+
+  context.fillStyle = "#82c7a5";
+  context.fillRect(-18, -27, 9, 16);
+  context.strokeRect(-18, -27, 9, 16);
+  context.fillRect(9, -27, 9, 16);
+  context.strokeRect(9, -27, 9, 16);
+
+  drawChibiFace(context, "#82c7a5");
+
+  context.restore();
+}
+
+function drawFireChibi(context, x, y, scale = 1) {
+  context.save();
+  context.translate(x, y);
+  context.scale(scale, scale);
+
+  context.strokeStyle = "#202020";
+  context.lineWidth = 4;
+  context.fillStyle = "#f08b48";
+
+  context.fillRect(-18, -28, 10, 18);
+  context.strokeRect(-18, -28, 10, 18);
+  context.fillRect(8, -28, 10, 18);
+  context.strokeRect(8, -28, 10, 18);
+
+  drawChibiFace(context, "#f08b48");
+
+  context.save();
+  context.translate(28, 8);
+  context.rotate(-0.35);
+  context.fillStyle = "#f08b48";
+  context.fillRect(0, -4, 23, 9);
+  context.strokeRect(0, -4, 23, 9);
+
+  context.translate(24, -5);
+  context.rotate(0.35);
+  context.fillStyle = "#df4a4a";
+  context.beginPath();
+  context.moveTo(0, 12);
+  context.lineTo(8, -13);
+  context.lineTo(17, 3);
+  context.lineTo(20, 16);
+  context.lineTo(8, 20);
+  context.closePath();
+  context.fill();
+  context.stroke();
+
+  context.fillStyle = "#f7d154";
+  context.beginPath();
+  context.moveTo(7, 13);
+  context.lineTo(11, -2);
+  context.lineTo(15, 10);
+  context.lineTo(14, 15);
+  context.closePath();
+  context.fill();
+  context.restore();
+
+  context.restore();
+}
+
+function drawStoryDialogue(context, theme) {
+  const x = 155;
+  const y = 1335;
+  const width = 770;
+  const height = 160;
+
+  context.save();
+
+  context.shadowColor = "rgba(32, 32, 32, 0.18)";
+  context.shadowBlur = 0;
+  context.shadowOffsetX = 12;
+  context.shadowOffsetY = 12;
+
+  roundedRectPath(context, x, y, width, height, 8);
+  context.fillStyle = "#fffdf2";
+  context.fill();
+
+  context.shadowColor = "transparent";
+  context.lineWidth = 8;
+  context.strokeStyle = "#202020";
+  context.stroke();
+
+  roundedRectPath(context, x + 12, y + 12, width - 24, height - 24, 2);
+  context.lineWidth = 5;
+  context.strokeStyle = theme.secondary;
+  context.stroke();
+
+  context.fillStyle = theme.accent;
+  context.fillRect(x + 32, y + 37, 14, 14);
+
+  context.fillStyle = "#202020";
+  context.textAlign = "left";
+  context.textBaseline = "alphabetic";
+  context.font = `900 34px ${STORY_FONT}`;
+  context.fillText("A memory was caught!", x + 68, y + 64);
+
+  context.fillStyle = "#5d5a55";
+  context.font = `700 23px ${STORY_FONT}`;
+  context.fillText(
+    "Share your PokeFrame with your party.",
+    x + 68,
+    y + 109
+  );
+
+  context.restore();
+}
+
 function Field({
 
   icon,
@@ -1300,6 +1642,223 @@ export default function PokeOutput({
 
   };
 
+  const createSocialStoryCanvas = async () => {
+    const cardCanvas = await createCardCanvas();
+    const primaryLogo = await loadImage(smoraPrimary);
+    const canvas = document.createElement("canvas");
+
+    canvas.width = STORY_WIDTH;
+    canvas.height = STORY_HEIGHT;
+
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("Could not create PokeFrame story canvas.");
+    }
+
+    const theme =
+      STORY_THEMES[currentFrame.id] ||
+      STORY_THEMES.electric;
+
+    context.fillStyle = "#f4e8b9";
+    context.fillRect(0, 0, STORY_WIDTH, STORY_HEIGHT);
+
+    drawPixelGrid(context);
+
+    const backgroundGlow = context.createRadialGradient(
+      STORY_WIDTH / 2,
+      880,
+      100,
+      STORY_WIDTH / 2,
+      880,
+      880
+    );
+    backgroundGlow.addColorStop(0, "rgba(255, 255, 255, 0.72)");
+    backgroundGlow.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+    context.fillStyle = backgroundGlow;
+    context.fillRect(0, 0, STORY_WIDTH, STORY_HEIGHT);
+
+    context.save();
+    context.globalAlpha = 0.1;
+    context.fillStyle = theme.secondary;
+
+    context.beginPath();
+    context.arc(-30, 680, 230, 0, Math.PI * 2);
+    context.fill();
+
+    context.beginPath();
+    context.arc(1110, 1080, 280, 0, Math.PI * 2);
+    context.fill();
+
+    context.restore();
+
+    const logoMaxWidth = 460;
+    const logoScale = Math.min(
+      logoMaxWidth / primaryLogo.width,
+      1
+    );
+    const logoWidth = primaryLogo.width * logoScale;
+    const logoHeight = primaryLogo.height * logoScale;
+    const logoX = (STORY_WIDTH - logoWidth) / 2;
+
+    context.drawImage(
+      primaryLogo,
+      logoX,
+      64,
+      logoWidth,
+      logoHeight
+    );
+
+    context.textAlign = "center";
+    context.textBaseline = "alphabetic";
+
+    context.fillStyle = theme.accentDark;
+    context.font = `900 25px ${STORY_FONT}`;
+    context.fillText(
+      "SMORA · POKEFRAME",
+      STORY_WIDTH / 2,
+      278
+    );
+
+    context.fillStyle = "#202020";
+    context.font = `900 48px ${STORY_FONT}`;
+    context.fillText(
+      "MEMORY CAUGHT!",
+      STORY_WIDTH / 2,
+      338
+    );
+
+    context.fillStyle = "#5d5a55";
+    context.font = `700 20px ${STORY_FONT}`;
+    context.fillText(
+      `${currentFrame.label.toUpperCase()} TYPE`,
+      STORY_WIDTH / 2,
+      378
+    );
+
+    drawPixelSparkle(context, 170, 295, 52, theme.highlight);
+    drawPixelSparkle(context, 915, 318, 40, theme.secondary);
+    drawPixelBall(context, 916, 530, 88, 0.16);
+    drawPixelBall(context, 155, 1030, 66, -0.18);
+
+    drawElectricChibi(context, 152, 515, 1.72);
+    drawGrassChibi(context, 904, 760, 1.58);
+    drawFireChibi(context, 145, 1228, 1.55);
+
+    const cardMaxWidth = 520;
+    const cardMaxHeight = 790;
+    const cardScale = Math.min(
+      cardMaxWidth / cardCanvas.width,
+      cardMaxHeight / cardCanvas.height
+    );
+    const cardWidth = cardCanvas.width * cardScale;
+    const cardHeight = cardCanvas.height * cardScale;
+    const cardCenterX = STORY_WIDTH / 2;
+    const cardCenterY = 850;
+    const cardRotation = -0.022;
+
+    context.save();
+    context.translate(cardCenterX, cardCenterY);
+    context.rotate(cardRotation);
+
+    context.shadowColor = "rgba(32, 32, 32, 0.25)";
+    context.shadowBlur = 35;
+    context.shadowOffsetX = 10;
+    context.shadowOffsetY = 24;
+
+    roundedRectPath(
+      context,
+      -cardWidth / 2 - 12,
+      -cardHeight / 2 - 12,
+      cardWidth + 24,
+      cardHeight + 24,
+      24
+    );
+    context.fillStyle = "#fffdf2";
+    context.fill();
+
+    context.shadowColor = "transparent";
+
+    roundedRectPath(
+      context,
+      -cardWidth / 2 - 12,
+      -cardHeight / 2 - 12,
+      cardWidth + 24,
+      cardHeight + 24,
+      24
+    );
+    context.lineWidth = 7;
+    context.strokeStyle = "#202020";
+    context.stroke();
+
+    context.drawImage(
+      cardCanvas,
+      -cardWidth / 2,
+      -cardHeight / 2,
+      cardWidth,
+      cardHeight
+    );
+
+    context.restore();
+
+    drawStoryDialogue(context, theme);
+
+    drawPixelSparkle(context, 868, 1255, 58, theme.highlight);
+    drawPixelSparkle(context, 237, 1575, 42, theme.secondary);
+
+    const pillWidth = 610;
+    const pillHeight = 90;
+    const pillX = (STORY_WIDTH - pillWidth) / 2;
+    const pillY = 1650;
+
+    context.save();
+    context.shadowColor = "rgba(32, 32, 32, 0.14)";
+    context.shadowBlur = 0;
+    context.shadowOffsetX = 7;
+    context.shadowOffsetY = 7;
+
+    roundedRectPath(
+      context,
+      pillX,
+      pillY,
+      pillWidth,
+      pillHeight,
+      10
+    );
+    context.fillStyle = theme.highlight;
+    context.fill();
+
+    context.shadowColor = "transparent";
+    context.lineWidth = 6;
+    context.strokeStyle = "#202020";
+    context.stroke();
+
+    context.fillStyle = "#202020";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.font = `900 27px ${STORY_FONT}`;
+    context.fillText(
+      "smora-photobooth.vercel.app",
+      STORY_WIDTH / 2,
+      pillY + pillHeight / 2 + 2
+    );
+
+    context.restore();
+
+    context.fillStyle = "#5d5a55";
+    context.textAlign = "center";
+    context.textBaseline = "alphabetic";
+    context.font = `700 17px ${STORY_FONT}`;
+    context.fillText(
+      "SNAP · CATCH · SHARE YOUR MEMORY",
+      STORY_WIDTH / 2,
+      1810
+    );
+
+    return canvas;
+  };
+
   const downloadCanvas = (
 
     canvas,
@@ -1417,117 +1976,49 @@ export default function PokeOutput({
   };
 
   const handleShare = async () => {
-
     if (isSharing) {
-
       return;
-
     }
 
     setIsSharing(true);
 
     try {
-
-      const canvas =
-
-        await createCardCanvas();
-
-      const blob =
-
-        await canvasToBlob(
-
-          canvas
-
-        );
-
+      const canvas = await createSocialStoryCanvas();
+      const blob = await canvasToBlob(canvas);
       const file = new File(
-
         [blob],
-
-        `smora-pokeframe-${Date.now()}.png`,
-
+        `smora-pokeframe-story-${Date.now()}.png`,
         {
-
           type: "image/png",
-
         }
-
       );
 
       const canShareFile =
-
-        typeof navigator.share ===
-
-        "function" &&
-
-        (
-
-          typeof navigator.canShare !==
-
-          "function" ||
-
+        typeof navigator.share === "function" &&
+        (typeof navigator.canShare !== "function" ||
           navigator.canShare({
-
             files: [file],
-
-          })
-
-        );
+          }));
 
       if (canShareFile) {
-
         await navigator.share({
-
-          title:
-
-            "My Smora PokeFrame",
-
-          text:
-
-            "Made with Smora — Smile with Memories.",
-
+          title: "My Smora PokeFrame Story",
+          text: "Made with Smora — Smile with Memories.",
           files: [file],
-
         });
-
       } else {
-
-        downloadCanvas(
-
-          canvas,
-
-          file.name
-
-        );
-
+        downloadCanvas(canvas, file.name);
       }
-
     } catch (error) {
-
-      if (
-
-        error?.name !==
-
-        "AbortError"
-
-      ) {
-
+      if (error?.name !== "AbortError") {
         console.error(
-
-          "Unable to share PokeFrame:",
-
+          "Unable to share PokeFrame story:",
           error
-
         );
-
       }
-
     } finally {
-
       setIsSharing(false);
-
     }
-
   };
 
   const lookControls = (
@@ -1923,49 +2414,87 @@ export default function PokeOutput({
   return (
 
     <div className="poke-output-page">
+
       <div className="poke-output-pixel-grid" aria-hidden="true" />
 
       <div className="poke-chibi-world" aria-hidden="true">
+
         <div className="poke-chibi-runner poke-chibi-runner-pika">
+
           <div className="poke-chibi poke-chibi-pika">
+
             <span className="poke-chibi-ear poke-chibi-ear-left" />
+
             <span className="poke-chibi-ear poke-chibi-ear-right" />
+
             <span className="poke-chibi-face">
+
               <span className="poke-chibi-eye poke-chibi-eye-left" />
+
               <span className="poke-chibi-eye poke-chibi-eye-right" />
+
               <span className="poke-chibi-cheek poke-chibi-cheek-left" />
+
               <span className="poke-chibi-cheek poke-chibi-cheek-right" />
+
             </span>
+
             <span className="poke-chibi-tail poke-chibi-tail-zap" />
+
             <span className="poke-chibi-feet" />
+
           </div>
+
         </div>
 
         <div className="poke-chibi-runner poke-chibi-runner-bulb">
+
           <div className="poke-chibi poke-chibi-bulb">
+
             <span className="poke-chibi-bulb-back" />
+
             <span className="poke-chibi-ear poke-chibi-ear-left" />
+
             <span className="poke-chibi-ear poke-chibi-ear-right" />
+
             <span className="poke-chibi-face">
+
               <span className="poke-chibi-eye poke-chibi-eye-left" />
+
               <span className="poke-chibi-eye poke-chibi-eye-right" />
+
               <span className="poke-chibi-smile" />
+
             </span>
+
             <span className="poke-chibi-feet" />
+
           </div>
+
         </div>
 
         <div className="poke-chibi-runner poke-chibi-runner-fire">
+
           <div className="poke-chibi poke-chibi-fire">
+
             <span className="poke-chibi-face">
+
               <span className="poke-chibi-eye poke-chibi-eye-left" />
+
               <span className="poke-chibi-eye poke-chibi-eye-right" />
+
               <span className="poke-chibi-smile" />
+
             </span>
+
             <span className="poke-chibi-tail poke-chibi-tail-fire" />
+
             <span className="poke-chibi-feet" />
+
           </div>
+
         </div>
+
       </div>
 
       <main className="poke-output-container">
@@ -2131,8 +2660,11 @@ export default function PokeOutput({
               </div>
 
               <div className="poke-card-float-stage">
+
                 <span className="poke-card-pixel-spark poke-card-pixel-spark-one" />
+
                 <span className="poke-card-pixel-spark poke-card-pixel-spark-two" />
+
                 <span className="poke-card-pixel-spark poke-card-pixel-spark-three" />
 
                 <div className="poke-card-preview">
@@ -2280,6 +2812,7 @@ export default function PokeOutput({
                 </div>
 
                 <span className="poke-card-floating-shadow" />
+
               </div>
 
             </div>

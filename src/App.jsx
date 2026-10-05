@@ -71,7 +71,7 @@ function App() {
   useEffect(() => {
     const audio = new Audio(pokemonSound);
     audio.loop = true;
-    audio.volume = 0.35;
+    audio.volume = 0.08;
     pokemonAudioRef.current = audio;
     return () => {
       audio.pause();
