@@ -693,7 +693,6 @@ button {
   }
 
   .poke-pb-camera-screen {
-    min-height: 0;
     border-width: 5px;
     box-shadow: 0 0 0 3px var(--pixel-paper), 0 0 0 6px var(--pixel-blue-dark), 5px 5px 0 6px var(--pixel-black);
   }
@@ -920,7 +919,6 @@ button {
 
 .poke-pb-camera-screen {
   height: 400px;
-  min-height: 690px;
 }
 
 .poke-photo-chibi-world {
@@ -1195,8 +1193,8 @@ button {
 
 @media (max-height: 820px) and (min-width: 901px) {
   .poke-pb-camera-screen {
-    height: 620px;
-    min-height: 620px;
+    height: 600px;
+    min-height: 600px;
   }
 }
 
