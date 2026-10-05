@@ -1,703 +1,1249 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.poke-photobooth-page {
+  \--pixel-black: #202020;
+  \--pixel-ink: #303030;
+  \--pixel-cream: #fff7d6;
+  \--pixel-paper: #fffdf2;
+  \--pixel-red: #df4a4a;
+  \--pixel-red-dark: #9f2929;
+  \--pixel-yellow: #f7d154;
+  \--pixel-blue: #4f77b8;
+  \--pixel-blue-dark: #315388;
+  \--pixel-green: #77a956;
+  \--pixel-green-dark: #4e7637;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient( 90deg, rgba(32, 32, 32, 0.055) 1px, transparent 1px ), linear-gradient( rgba(32, 32, 32, 0.055) 1px, transparent 1px ), #f4e8b9;
+  background-size: 18px 18px;
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+}
+
+.poke-pixel-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient( 135deg, transparent 0 74%, rgba(79, 119, 184, 0.08) 74% 78%, transparent 78% 100% );
+  background-size: 36px 36px;
+}
+
+.poke-photobooth-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1320px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 18px 28px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.poke-photobooth-header {
+  width: 100%;
+  height: 64px;
+  margin-bottom: 40px;
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: 150px 1fr 150px;
+  align-items: center;
+  gap: 18px;
+}
+
+.poke-photobooth-back,
+.poke-photobooth-step,
+.poke-fullscreen-button,
+.poke-capture-button,
+.poke-retake-button,
+.poke-continue-button,
+.poke-pb-camera-error button {
+  border: 4px solid var(--pixel-black);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--pixel-black);
+  image-rendering: pixelated;
+}
+
+.poke-photobooth-back {
+  width: fit-content;
+  min-width: 112px;
+  height: 42px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--pixel-paper);
+  color: var(--pixel-black);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.poke-photobooth-back svg {
+  width: 16px;
+  height: 16px;
+}
+
+.poke-photobooth-back:hover {
+  background: var(--pixel-yellow);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-photobooth-back:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--pixel-black);
+}
+
+.poke-photobooth-title {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.poke-photobooth-title span {
+  color: var(--pixel-red-dark);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.poke-photobooth-title strong {
+  margin-top: 3px;
+  color: var(--pixel-black);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.poke-photobooth-step {
+  justify-self: end;
+  min-width: 112px;
+  height: 42px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--pixel-yellow);
+  color: var(--pixel-black);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.poke-pixel-ball {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-block;
+  overflow: hidden;
+  border: 3px solid var(--pixel-black);
+  border-radius: 50%;
+  background: linear-gradient( to bottom, var(--pixel-red) 0 44%, var(--pixel-black) 44% 56%, #ffffff 56% 100% );
+}
+
+.poke-pixel-ball-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border: 2px solid var(--pixel-black);
+  border-radius: 50%;
+  background: #ffffff;
+  transform: translate(-50%, -50%);
+}
+
+.poke-photobooth-content {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.poke-pb-camera-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  isolation: isolate;
+  border: 6px solid var(--pixel-black);
+  border-radius: 0;
+  background: #111111;
+  box-shadow: 0 0 0 5px var(--pixel-paper), 0 0 0 9px var(--pixel-blue-dark), 8px 8px 0 9px var(--pixel-black);
+}
+
+.poke-pb-camera-pixel-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.poke-pb-camera-pixel-corners::before,
+.poke-pb-camera-pixel-corners::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-color: var(--pixel-yellow);
+  border-style: solid;
+  filter: drop-shadow( 2px 2px 0 var(--pixel-black) );
+}
+
+.poke-pb-camera-pixel-corners::before {
+  left: 14px;
+  bottom: 150px;
+  border-width: 0 0 5px 5px;
+}
+
+.poke-pb-camera-pixel-corners::after {
+  right: 14px;
+  bottom: 150px;
+  border-width: 0 5px 5px 0;
+}
+
+.poke-pb-camera-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.poke-pb-camera-mirrored {
+  transform: scaleX(-1);
+}
+
+.poke-pb-camera-scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.18;
+  background: repeating-linear-gradient( to bottom, transparent 0 4px, rgba(0, 0, 0, 0.25) 4px 5px );
+}
+
+.poke-photo-preview {
+  position: absolute;
+  z-index: 20;
+  top: 18px;
+  left: 18px;
+  width: clamp(142px, 15vw, 190px);
+  padding: 6px;
+  border: 4px solid var(--pixel-black);
+  border-radius: 0;
+  background: var(--pixel-paper);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-photo-preview-header {
+  min-height: 28px;
+  padding: 0 3px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.poke-photo-preview-header > span:first-child {
+  color: var(--pixel-black);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.poke-preview-status {
+  padding: 3px 5px;
+  border: 2px solid var(--pixel-black);
+  background: #d8d8d8;
+  color: var(--pixel-black);
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.poke-preview-status-ready {
+  background: var(--pixel-green);
+  color: #ffffff;
+}
+
+.poke-photo-preview-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 3px solid var(--pixel-black);
+  border-radius: 0;
+  background: linear-gradient( 45deg, #d7e3c0 25%, #c6d5ad 25% 50%, #d7e3c0 50% 75%, #c6d5ad 75% );
+  background-size: 12px 12px;
+}
+
+.poke-photo-preview-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.poke-photo-preview-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--pixel-green-dark);
+}
+
+.poke-photo-preview-empty .poke-pixel-ball {
+  width: 24px;
+  height: 24px;
+}
+
+.poke-photo-preview-empty span:last-child {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.poke-photo-preview-filled {
+  background: #ffffff;
+}
+
+.poke-fullscreen-button {
+  position: absolute;
+  z-index: 20;
+  top: 18px;
+  right: 18px;
+  height: 40px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--pixel-paper);
+  color: var(--pixel-black);
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.poke-fullscreen-button:hover {
+  background: var(--pixel-blue);
+  color: #ffffff;
+}
+
+.poke-fullscreen-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.poke-pb-camera-dialogue {
+  position: absolute;
+  z-index: 24;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  min-height: 116px;
+  padding: 15px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 18px;
+  border: 5px solid var(--pixel-black);
+  background: var(--pixel-paper);
+  box-shadow: inset 0 0 0 4px var(--pixel-blue), 6px 6px 0 var(--pixel-black);
+}
+
+.poke-pb-camera-dialogue-result {
+  grid-template-columns: 1fr auto;
+}
+
+.poke-dialogue-copy {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.poke-dialogue-cursor {
+  margin-top: 2px;
+  color: var(--pixel-red);
+  font-size: 16px;
+  line-height: 1;
+  animation: poke-cursor-blink 0.8s steps(1) infinite;
+}
+
+@keyframes poke-cursor-blink {
+  0%,
+  48% {
+    opacity: 1;
   }
-  
-  html,
-  body,
-  #root {
-    margin: 0;
-    min-height: 100%;
+
+  49%,
+  100% {
+    opacity: 0;
   }
-  
-  html,
-  body {
-    overflow-x: hidden;
+}
+
+.poke-dialogue-copy p {
+  margin: 0;
+  color: var(--pixel-black);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.55;
+  letter-spacing: 0.015em;
+}
+
+.poke-capture-button {
+  min-width: 168px;
+  height: 54px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: var(--pixel-red);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.poke-capture-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.poke-capture-button:hover:not(:disabled) {
+  background: var(--pixel-red-dark);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-capture-button:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--pixel-black);
+}
+
+.poke-capture-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.poke-result-actions {
+  display: grid;
+  grid-template-columns: 118px 148px;
+  gap: 9px;
+}
+
+.poke-retake-button,
+.poke-continue-button {
+  height: 50px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.poke-retake-button {
+  background: var(--pixel-paper);
+  color: var(--pixel-black);
+}
+
+.poke-retake-button svg {
+  width: 15px;
+  height: 15px;
+}
+
+.poke-continue-button {
+  background: var(--pixel-yellow);
+  color: var(--pixel-black);
+}
+
+.poke-retake-button:hover,
+.poke-continue-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-retake-button:active,
+.poke-continue-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--pixel-black);
+}
+
+.poke-countdown {
+  position: absolute;
+  z-index: 23;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 28, 24, 0.36);
+  pointer-events: none;
+}
+
+.poke-countdown-box {
+  width: 220px;
+  min-height: 150px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 6px solid var(--pixel-black);
+  background: var(--pixel-paper);
+  box-shadow: inset 0 0 0 5px var(--pixel-yellow), 8px 8px 0 var(--pixel-black);
+}
+
+.poke-countdown-box small {
+  color: var(--pixel-red-dark);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.poke-countdown-box strong {
+  margin-top: 6px;
+  color: var(--pixel-black);
+  font-size: 72px;
+  font-weight: 900;
+  line-height: 0.95;
+}
+
+.poke-pb-camera-flash {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  background: #ffffff;
+  pointer-events: none;
+  animation: poke-flash 0.16s steps(2) forwards;
+}
+
+@keyframes poke-flash {
+  from {
+    opacity: 1;
   }
-  
-  button {
-    font: inherit;
+
+  to {
+    opacity: 0;
   }
-  
-  .poke-photobooth-page {
-    width: 100%;
-    min-height: 100vh;
-    background: #fff9f0;
-    color: #2e2e2e;
-    font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
-  }
-  
+}
+
+.poke-pb-camera-error {
+  position: absolute;
+  z-index: 12;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: linear-gradient( 45deg, #dbe8c5 25%, #cdddb4 25% 50%, #dbe8c5 50% 75%, #cdddb4 75% );
+  background-size: 22px 22px;
+  color: var(--pixel-black);
+  text-align: center;
+}
+
+.poke-pb-camera-error > .poke-pixel-ball {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 18px;
+}
+
+.poke-pb-camera-error strong {
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.poke-pb-camera-error p {
+  max-width: 410px;
+  margin: 10px 0 18px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
+.poke-pb-camera-error button {
+  height: 46px;
+  padding: 0 16px;
+  background: var(--pixel-red);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+}
+
+.poke-bottom-status {
+  height: 30px;
+  flex-shrink: 0;
+  padding: 8px 2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--pixel-ink);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.poke-pb-camera-screen:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  border: 6px solid var(--pixel-black);
+  box-shadow: inset 0 0 0 5px var(--pixel-blue-dark);
+}
+
+.poke-pb-camera-screen:fullscreen .poke-pb-camera-dialogue {
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+}
+
+@media (max-width: 900px) {
   .poke-photobooth-container {
-    width: 100%;
-    max-width: 1500px;
-    height: 100vh;
-    margin: 0 auto;
-    padding: 16px 22px 22px;
-    display: flex;
-    flex-direction: column;
+    padding: 12px 14px 16px;
   }
-  
+
   .poke-photobooth-header {
-    position: relative;
-    width: 100%;
-    height: 64px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    height: 58px;
+    grid-template-columns: 48px 1fr 48px;
+    gap: 10px;
   }
-  
+
   .poke-photobooth-back {
-    min-width: 102px;
-    height: 42px;
-    padding: 0 15px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 3px solid #2e2e2e;
-    border-radius: 13px;
-    background: #ffffff;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 900;
-    transition:
-      transform 0.12s ease,
-      box-shadow 0.12s ease,
-      background 0.12s ease;
-  }
-  
-  .poke-photobooth-back svg {
-    width: 17px;
-    height: 17px;
-  }
-  
-  .poke-photobooth-back:hover {
-    background: #ffc629;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #2e2e2e;
-  }
-  
-  .poke-photobooth-back:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #2e2e2e;
-  }
-  
-  .poke-photobooth-title {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    text-align: center;
-  }
-  
-  .poke-photobooth-title span {
-    color: #ff7b7b;
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  
-  .poke-photobooth-title strong {
-    color: #2e2e2e;
-    font-size: 15px;
-    font-weight: 900;
-  }
-  
-  .poke-photobooth-step {
+    width: 42px;
+    min-width: 42px;
     height: 40px;
-    padding: 0 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    border: 2px solid #2e2e2e;
-    border-radius: 999px;
-    background: #ffc629;
-    color: #2e2e2e;
-    box-shadow: 0 3px 0 #2e2e2e;
+    padding: 0;
   }
-  
-  .poke-photobooth-step svg {
-    width: 14px;
-    height: 14px;
+
+  .poke-photobooth-back span {
+    display: none;
   }
-  
-  .poke-photobooth-step span {
-    font-size: 10px;
-    font-weight: 900;
-    text-transform: uppercase;
+
+  .poke-photobooth-title span {
+    font-size: 6px;
   }
-  
-  .poke-photobooth-content {
-    flex: 1;
+
+  .poke-photobooth-title strong {
+    font-size: 11px;
+  }
+
+  .poke-photobooth-step {
+    min-width: 42px;
+    width: 42px;
+    height: 40px;
+    padding: 0;
+  }
+
+  .poke-photobooth-step > span {
+    display: none;
+  }
+
+  .poke-photobooth-step .poke-pixel-ball {
+    width: 18px;
+    height: 18px;
+  }
+
+  .poke-pb-camera-screen {
     min-height: 0;
-    width: 100%;
-    display: flex;
+    border-width: 5px;
+    box-shadow: 0 0 0 3px var(--pixel-paper), 0 0 0 6px var(--pixel-blue-dark), 5px 5px 0 6px var(--pixel-black);
   }
-  
-  .poke-camera-screen {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    min-height: 520px;
-    overflow: hidden;
-    isolation: isolate;
-    border: 3px solid #2e2e2e;
-    border-radius: 28px;
-    background: #1d1d1d;
-    box-shadow: 0 8px 0 #2e2e2e;
-  }
-  
-  .poke-camera-video {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .poke-camera-mirrored {
-    transform: scaleX(-1);
-  }
-  
+
   .poke-photo-preview {
-    position: absolute;
-    z-index: 20;
-    top: 16px;
-    left: 16px;
-    width: clamp(130px, 15vw, 200px);
-    padding: 8px;
-    border: 3px solid #2e2e2e;
-    border-radius: 17px;
-    background: rgba(255, 249, 240, 0.96);
-    box-shadow: 0 5px 0 #2e2e2e;
-    backdrop-filter: blur(8px);
+    top: 12px;
+    left: 12px;
+    width: 126px;
+    padding: 5px;
+    border-width: 3px;
+    box-shadow: 4px 4px 0 var(--pixel-black);
   }
-  
+
   .poke-photo-preview-header {
-    height: 25px;
-    padding: 0 2px 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    min-height: 23px;
   }
-  
-  .poke-photo-preview-header > span:first-child {
-    color: #2e2e2e;
-    font-size: 9px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  
-  .poke-preview-ready {
-    padding: 3px 6px;
-    border: 1.5px solid #2e2e2e;
-    border-radius: 999px;
-    background: #ffc629;
-    color: #2e2e2e;
-    font-size: 7px;
-    font-weight: 900;
-    text-transform: uppercase;
-  }
-  
-  .poke-photo-preview-image {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    border: 2px solid #2e2e2e;
-    border-radius: 10px;
-    background: #dedad4;
-  }
-  
-  .poke-photo-preview-image img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .poke-photo-preview-empty {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    color: #837e77;
-  }
-  
-  .poke-photo-preview-empty svg {
-    width: 23px;
-    height: 23px;
-  }
-  
-  .poke-photo-preview-empty span {
-    font-size: 8px;
-    font-weight: 900;
-  }
-  
-  .poke-photo-preview-filled {
-    background: #ffffff;
-  }
-  
+
   .poke-fullscreen-button {
-    position: absolute;
-    z-index: 20;
-    top: 16px;
-    right: 16px;
-    height: 42px;
-    padding: 0 13px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    border: 2px solid #2e2e2e;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.95);
-    color: #2e2e2e;
-    box-shadow: 0 3px 0 #2e2e2e;
-    cursor: pointer;
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 38px;
+    padding: 0;
+  }
+
+  .poke-fullscreen-button span {
+    display: none;
+  }
+
+  .poke-pb-camera-dialogue {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    min-height: 106px;
+    padding: 12px;
+    border-width: 4px;
+    gap: 12px;
+  }
+
+  .poke-dialogue-copy p {
     font-size: 10px;
-    font-weight: 900;
   }
-  
-  .poke-fullscreen-button svg {
-    width: 17px;
-    height: 17px;
-  }
-  
-  .poke-camera-actions {
-    position: absolute;
-    z-index: 25;
-    left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  
+
   .poke-capture-button {
-    min-width: 180px;
-    height: 56px;
-    padding: 0 22px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 3px solid #2e2e2e;
-    border-radius: 17px;
-    background: #ffc629;
-    color: #2e2e2e;
-    box-shadow: 0 5px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 900;
-    transition:
-      transform 0.12s ease,
-      box-shadow 0.12s ease;
+    min-width: 138px;
+    height: 48px;
+    font-size: 9px;
   }
-  
-  .poke-capture-icon {
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #2e2e2e;
-    border-radius: 10px;
-    background: #ffffff;
+
+  .poke-result-actions {
+    grid-template-columns: 104px 126px;
   }
-  
-  .poke-capture-icon svg {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .poke-capture-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 0 #2e2e2e;
-  }
-  
-  .poke-capture-button:active:not(:disabled) {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #2e2e2e;
-  }
-  
-  .poke-capture-button:disabled {
-    opacity: 0.7;
-    cursor: wait;
-  }
-  
-  .poke-camera-actions-result {
-    width: min(420px, calc(100% - 36px));
-  }
-  
+
   .poke-retake-button,
   .poke-continue-button {
+    height: 46px;
+    font-size: 8px;
+  }
+
+  .poke-pb-camera-pixel-corners::before,
+  .poke-pb-camera-pixel-corners::after {
+    bottom: 132px;
+  }
+}
+
+@media (max-width: 620px) {
+  .poke-photobooth-container {
+    height: 100dvh;
+    padding: 8px 8px 10px;
+  }
+
+  .poke-photobooth-header {
     height: 52px;
-    border: 3px solid #2e2e2e;
-    border-radius: 15px;
-    box-shadow: 0 5px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 900;
-    transition:
-      transform 0.12s ease,
-      box-shadow 0.12s ease;
   }
-  
-  .poke-retake-button {
-    flex: 1;
-    min-width: 130px;
-    padding: 0 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #ffffff;
-    color: #2e2e2e;
-  }
-  
-  .poke-retake-button svg {
-    width: 17px;
-    height: 17px;
-  }
-  
-  .poke-continue-button {
-    flex: 1.25;
-    min-width: 150px;
-    padding: 0 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    background: #ff7b7b;
-    color: #2e2e2e;
-  }
-  
-  .poke-continue-button span {
-    font-size: 19px;
-    line-height: 1;
-  }
-  
-  .poke-retake-button:hover,
-  .poke-continue-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 0 #2e2e2e;
-  }
-  
-  .poke-retake-button:active,
-  .poke-continue-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #2e2e2e;
-  }
-  
-  .poke-countdown {
-    position: absolute;
-    z-index: 18;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(20, 20, 20, 0.16);
-    color: #ffffff;
-    pointer-events: none;
-  }
-  
-  .poke-countdown span {
-    font-size: clamp(90px, 16vw, 190px);
-    font-weight: 900;
-    line-height: 0.9;
-    text-shadow: 0 5px 0 rgba(46, 46, 46, 0.4);
-  }
-  
-  .poke-countdown small {
-    margin-top: 14px;
-    padding: 8px 13px;
-    border: 2px solid #2e2e2e;
-    border-radius: 999px;
-    background: #ffc629;
-    color: #2e2e2e;
-    box-shadow: 0 3px 0 #2e2e2e;
-    font-size: 11px;
-    font-weight: 900;
-    text-transform: uppercase;
-  }
-  
-  .poke-camera-flash {
-    position: absolute;
-    z-index: 40;
-    inset: 0;
-    background: #ffffff;
-    pointer-events: none;
-    animation: poke-flash 0.15s ease-out forwards;
-  }
-  
-  @keyframes poke-flash {
-    from {
-      opacity: 1;
-    }
-  
-    to {
-      opacity: 0;
-    }
-  }
-  
-  .poke-camera-tip {
-    position: absolute;
-    z-index: 15;
-    left: 18px;
-    bottom: 18px;
-    max-width: 310px;
-    padding: 9px 11px;
-    display: flex;
-    align-items: flex-start;
-    gap: 7px;
-    border: 2px solid rgba(46, 46, 46, 0.75);
-    border-radius: 11px;
-    background: rgba(255, 249, 240, 0.9);
-    color: #2e2e2e;
-    backdrop-filter: blur(7px);
+
+  .poke-photobooth-title strong {
     font-size: 9px;
-    font-weight: 800;
-    line-height: 1.4;
   }
-  
-  .poke-camera-tip > span {
-    flex-shrink: 0;
-    color: #ff7b7b;
+
+  .poke-pb-camera-screen {
+    box-shadow: 0 0 0 2px var(--pixel-paper), 0 0 0 4px var(--pixel-blue-dark), 4px 4px 0 4px var(--pixel-black);
   }
-  
-  .poke-camera-error {
-    position: absolute;
-    z-index: 10;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    background: #fff9f0;
-    color: #2e2e2e;
-    text-align: center;
+
+  .poke-photo-preview {
+    top: 9px;
+    left: 9px;
+    width: 104px;
+    padding: 4px;
   }
-  
-  .poke-camera-error-icon {
-    width: 58px;
-    height: 58px;
-    margin-bottom: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #2e2e2e;
-    border-radius: 17px;
-    background: #ffc629;
-    box-shadow: 0 4px 0 #2e2e2e;
+
+  .poke-photo-preview-header {
+    min-height: 20px;
+    padding-bottom: 4px;
   }
-  
-  .poke-camera-error-icon svg {
-    width: 27px;
-    height: 27px;
+
+  .poke-photo-preview-header > span:first-child {
+    font-size: 6px;
   }
-  
-  .poke-camera-error strong {
-    font-size: 20px;
-    font-weight: 900;
+
+  .poke-preview-status {
+    padding: 2px 3px;
+    font-size: 5px;
   }
-  
-  .poke-camera-error p {
-    max-width: 370px;
-    margin: 7px 0 15px;
-    color: #77736d;
+
+  .poke-photo-preview-image {
+    border-width: 2px;
+  }
+
+  .poke-fullscreen-button {
+    top: 9px;
+    right: 9px;
+    width: 36px;
+    height: 35px;
+    border-width: 3px;
+    box-shadow: 3px 3px 0 var(--pixel-black);
+  }
+
+  .poke-pb-camera-dialogue {
+    left: 9px;
+    right: 9px;
+    bottom: 9px;
+    min-height: 136px;
+    padding: 10px;
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .poke-dialogue-copy {
+    gap: 7px;
+  }
+
+  .poke-dialogue-copy p {
+    font-size: 9px;
+    line-height: 1.45;
+  }
+
+  .poke-dialogue-cursor {
     font-size: 12px;
-    font-weight: 600;
-    line-height: 1.5;
   }
-  
-  .poke-camera-error button {
+
+  .poke-capture-button {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+  }
+
+  .poke-result-actions {
+    width: 100%;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 7px;
+  }
+
+  .poke-retake-button,
+  .poke-continue-button {
+    width: 100%;
+    min-width: 0;
     height: 42px;
-    padding: 0 16px;
-    border: 3px solid #2e2e2e;
-    border-radius: 12px;
-    background: #ff7b7b;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 900;
   }
-  
-  .poke-camera-screen:fullscreen {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    border: 0;
-    border-radius: 0;
-    box-shadow: none;
+
+  .poke-pb-camera-pixel-corners::before,
+  .poke-pb-camera-pixel-corners::after {
+    width: 25px;
+    height: 25px;
+    bottom: 155px;
+    border-width: 0 0 4px 4px;
   }
-  
-  @media (max-width: 760px) {
-    .poke-photobooth-container {
-      padding: 10px 12px 14px;
-    }
-  
-    .poke-photobooth-header {
-      height: 58px;
-    }
-  
-    .poke-photobooth-back {
-      width: 42px;
-      min-width: 42px;
-      height: 42px;
-      padding: 0;
-    }
-  
-    .poke-photobooth-back span {
-      display: none;
-    }
-  
-    .poke-photobooth-title strong {
-      font-size: 12px;
-    }
-  
-    .poke-photobooth-step {
-      height: 35px;
-      padding: 0 9px;
-    }
-  
-    .poke-photobooth-step span {
-      display: none;
-    }
-  
-    .poke-camera-screen {
-      min-height: 0;
-      border-radius: 20px;
-    }
-  
-    .poke-photo-preview {
-      top: 12px;
-      left: 12px;
-      width: 126px;
-      padding: 6px;
-      border-width: 2px;
-      border-radius: 14px;
-      box-shadow: 0 4px 0 #2e2e2e;
-    }
-  
-    .poke-photo-preview-header {
-      height: 22px;
-      padding-bottom: 5px;
-    }
-  
-    .poke-photo-preview-header > span:first-child {
-      font-size: 7px;
-    }
-  
-    .poke-preview-ready {
-      padding: 2px 5px;
-      font-size: 6px;
-    }
-  
-    .poke-fullscreen-button {
-      top: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
-      padding: 0;
-    }
-  
-    .poke-fullscreen-button span {
-      display: none;
-    }
-  
-    .poke-camera-tip {
-      display: none;
-    }
-  
-    .poke-camera-actions {
-      bottom: 20px;
-    }
-  
-    .poke-camera-actions-result {
-      width: calc(100% - 28px);
-    }
-  
-    .poke-retake-button,
-    .poke-continue-button {
-      min-width: 0;
-      height: 48px;
-    }
+
+  .poke-pb-camera-pixel-corners::after {
+    border-width: 0 4px 4px 0;
   }
-  
-  @media (max-width: 480px) {
-    .poke-photobooth-container {
-      height: 100dvh;
-      padding: 8px 8px 10px;
-    }
-  
-    .poke-photobooth-header {
-      height: 54px;
-    }
-  
-    .poke-photobooth-title span {
-      font-size: 7px;
-    }
-  
-    .poke-photobooth-title strong {
-      font-size: 11px;
-    }
-  
-    .poke-camera-screen {
-      border-radius: 18px;
-    }
-  
-    .poke-photo-preview {
-      width: 108px;
-    }
-  
-    .poke-photo-preview-empty svg {
-      width: 19px;
-      height: 19px;
-    }
-  
-    .poke-photo-preview-empty span {
-      font-size: 7px;
-    }
-  
-    .poke-capture-button {
-      min-width: 164px;
-      height: 52px;
-      padding: 0 18px;
-      font-size: 12px;
-    }
-  
-    .poke-capture-icon {
-      width: 27px;
-      height: 27px;
-    }
-  
-    .poke-camera-actions-result {
-      gap: 7px;
-    }
-  
-    .poke-retake-button,
-    .poke-continue-button {
-      padding: 0 12px;
-      font-size: 11px;
-    }
+
+  .poke-countdown-box {
+    width: 160px;
+    min-height: 120px;
+    border-width: 5px;
   }
-  
+
+  .poke-countdown-box strong {
+    font-size: 56px;
+  }
+
+  .poke-bottom-status {
+    height: 23px;
+    padding-top: 6px;
+    font-size: 5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .poke-photobooth-title span {
+    display: none;
+  }
+
+  .poke-photobooth-title strong {
+    font-size: 8px;
+  }
+
+  .poke-photo-preview {
+    width: 92px;
+  }
+
+  .poke-pb-camera-dialogue {
+    min-height: 128px;
+  }
+
+  .poke-dialogue-copy p {
+    font-size: 8px;
+  }
+
+  .poke-result-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poke-dialogue-cursor {
+    animation: none;
+  }
+
+  .poke-pb-camera-flash {
+    animation-duration: 0.01ms;
+  }
+}
+
+.poke-pb-camera-screen {
+  height: 400px;
+  min-height: 690px;
+}
+
+.poke-photo-chibi-world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.poke-photo-chibi-runner {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  will-change: transform;
+}
+
+.poke-photo-chibi-runner-electric {
+  left: -90px;
+  bottom: 18px;
+  animation: poke-photo-chibi-run-right 17s linear infinite;
+}
+
+.poke-photo-chibi-runner-grass {
+  right: -90px;
+  top: 96px;
+  animation: poke-photo-chibi-run-left 23s linear 4s infinite;
+}
+
+.poke-photo-chibi-runner-fire {
+  left: -90px;
+  top: 118px;
+  animation: poke-photo-chibi-run-right-small 21s linear 9s infinite;
+}
+
+@keyframes poke-photo-chibi-run-right {
+  from {
+    transform: translateX(-90px);
+  }
+
+  to {
+    transform: translateX(calc(100vw + 170px));
+  }
+}
+
+@keyframes poke-photo-chibi-run-right-small {
+  from {
+    transform: translateX(-90px) scale(0.82);
+  }
+
+  to {
+    transform: translateX(calc(100vw + 170px)) scale(0.82);
+  }
+}
+
+@keyframes poke-photo-chibi-run-left {
+  from {
+    transform: translateX(90px) scaleX(-1);
+  }
+
+  to {
+    transform: translateX(calc(-100vw - 170px)) scaleX(-1);
+  }
+}
+
+.poke-photo-chibi {
+  position: relative;
+  width: 48px;
+  height: 42px;
+  animation: poke-photo-chibi-hop 0.36s steps(2, end) infinite;
+  filter: drop-shadow(3px 3px 0 rgba(32, 32, 32, 0.25));
+}
+
+@keyframes poke-photo-chibi-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.poke-photo-chibi-face {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--pixel-black);
+  border-radius: 42% 42% 46% 46%;
+}
+
+.poke-photo-chibi-eye {
+  position: absolute;
+  top: 13px;
+  width: 5px;
+  height: 7px;
+  background: var(--pixel-black);
+}
+
+.poke-photo-chibi-eye-left {
+  left: 11px;
+}
+
+.poke-photo-chibi-eye-right {
+  right: 11px;
+}
+
+.poke-photo-chibi-cheek {
+  position: absolute;
+  top: 24px;
+  width: 7px;
+  height: 5px;
+  background: var(--pixel-red);
+}
+
+.poke-photo-chibi-cheek-left {
+  left: 5px;
+}
+
+.poke-photo-chibi-cheek-right {
+  right: 5px;
+}
+
+.poke-photo-chibi-smile {
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  width: 8px;
+  height: 4px;
+  border-right: 2px solid var(--pixel-black);
+  border-bottom: 2px solid var(--pixel-black);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.poke-photo-chibi-ear {
+  position: absolute;
+  z-index: -1;
+  top: -11px;
+  width: 12px;
+  height: 22px;
+  border: 3px solid var(--pixel-black);
+}
+
+.poke-photo-chibi-ear-left {
+  left: 5px;
+  transform: rotate(-18deg);
+}
+
+.poke-photo-chibi-ear-right {
+  right: 5px;
+  transform: rotate(18deg);
+}
+
+.poke-photo-chibi-feet {
+  position: absolute;
+  left: 7px;
+  bottom: -5px;
+  width: 12px;
+  height: 6px;
+  background: var(--pixel-black);
+  box-shadow: 22px 0 0 var(--pixel-black);
+}
+
+.poke-photo-chibi-tail {
+  position: absolute;
+  z-index: -1;
+}
+
+/* Electric companion */
+
+.poke-photo-chibi-electric .poke-photo-chibi-face,
+.poke-photo-chibi-electric .poke-photo-chibi-ear {
+  background: #f7d154;
+}
+
+.poke-photo-chibi-electric .poke-photo-chibi-ear::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -3px;
+  width: 12px;
+  height: 7px;
+  background: var(--pixel-black);
+}
+
+.poke-photo-chibi-tail-electric {
+  right: -19px;
+  top: 15px;
+  width: 20px;
+  height: 8px;
+  border: 3px solid var(--pixel-black);
+  background: #f7d154;
+  transform: rotate(-28deg);
+  box-shadow: 8px -8px 0 -2px #f7d154, 10px -10px 0 0 var(--pixel-black);
+}
+
+/* Grass companion */
+
+.poke-photo-chibi-grass .poke-photo-chibi-face {
+  background: #82c7a5;
+}
+
+.poke-photo-chibi-grass .poke-photo-chibi-ear {
+  top: -7px;
+  width: 10px;
+  height: 15px;
+  background: #82c7a5;
+}
+
+.poke-photo-chibi-bulb {
+  position: absolute;
+  z-index: -2;
+  left: 7px;
+  top: -15px;
+  width: 34px;
+  height: 28px;
+  border: 3px solid var(--pixel-black);
+  border-radius: 55% 55% 45% 45%;
+  background: #5f9b4b;
+}
+
+.poke-photo-chibi-bulb::before,
+.poke-photo-chibi-bulb::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 13px;
+  height: 18px;
+  border: 3px solid var(--pixel-black);
+  background: #77a956;
+}
+
+.poke-photo-chibi-bulb::before {
+  left: 2px;
+  transform: rotate(-28deg);
+}
+
+.poke-photo-chibi-bulb::after {
+  right: 2px;
+  transform: rotate(28deg);
+}
+
+/* Fire companion */
+
+.poke-photo-chibi-fire .poke-photo-chibi-face {
+  background: #f08b48;
+}
+
+.poke-photo-chibi-tail-fire {
+  right: -18px;
+  bottom: 3px;
+  width: 20px;
+  height: 9px;
+  border: 3px solid var(--pixel-black);
+  background: #f08b48;
+  transform: rotate(-22deg);
+}
+
+.poke-photo-chibi-tail-fire::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 13px;
+  height: 18px;
+  border: 3px solid var(--pixel-black);
+  background: linear-gradient( to top, #df4a4a 0 45%, #f7d154 45% 100% );
+  clip-path: polygon( 50% 0, 100% 55%, 72% 100%, 28% 100%, 0 55% );
+}
+
+/* Responsive camera height only — layout spacing is unchanged. */
+
+@media (max-height: 820px) and (min-width: 901px) {
+  .poke-pb-camera-screen {
+    height: 620px;
+    min-height: 620px;
+  }
+}
+
+@media (max-width: 900px) {
+  .poke-pb-camera-screen {
+    height: 600px;
+    min-height: 600px;
+  }
+
+  .poke-photo-chibi-runner-fire {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .poke-pb-camera-screen {
+    height: 540px;
+    min-height: 540px;
+  }
+
+  .poke-photo-chibi-runner {
+    opacity: 0.72;
+  }
+
+  .poke-photo-chibi-runner-electric {
+    bottom: 8px;
+  }
+
+  .poke-photo-chibi-runner-grass {
+    top: 64px;
+  }
+}
+
+@media (max-width: 390px) {
+  .poke-pb-camera-screen {
+    height: 500px;
+    min-height: 500px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poke-photo-chibi-runner,
+  .poke-photo-chibi {
+    animation: none;
+  }
+
+  .poke-photo-chibi-world {
+    display: none;
+  }
+}

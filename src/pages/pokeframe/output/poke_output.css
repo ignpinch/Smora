@@ -1,1100 +1,2007 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  html,
-  body,
-  #root {
-    margin: 0;
-    min-height: 100%;
-  }
-  
-  html,
-  body {
-    overflow-x: hidden;
-  }
-  
-  button,
-  input,
-  textarea {
-    font: inherit;
-  }
-  
-  .poke-output-page {
-    width: 100%;
-    min-height: 100vh;
-    background: #fff9f0;
-    color: #2e2e2e;
-    font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
-  }
-  
-  .poke-output-container {
-    width: 100%;
-    max-width: 1280px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 20px 30px 80px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .poke-output-header {
-    position: relative;
-    width: 100%;
-    height: 68px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .poke-output-back-button {
-    min-width: 104px;
-    height: 44px;
-    padding: 0 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 3px solid #2e2e2e;
-    border-radius: 14px;
-    background: #ffffff;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 800;
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
-  }
-  
-  .poke-output-back-button svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .poke-output-back-button:hover {
-    background: #ffc629;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #2e2e2e;
-  }
-  
-  .poke-output-back-button:active {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #2e2e2e;
-  }
-  
-  .poke-output-current-step {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .poke-output-current-step span,
-  .poke-output-ready-state span {
-    color: #aaa49b;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-  
-  .poke-output-current-step strong {
-    color: #2e2e2e;
-    font-size: 15px;
-    font-weight: 900;
-  }
-  
-  .poke-output-ready-state {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    opacity: 0.42;
-  }
-  
-  .poke-output-ready-state strong {
-    color: #2e2e2e;
-    font-size: 13px;
-    font-weight: 800;
-  }
-  
-  .poke-output-content {
-    flex: 1;
-    width: 100%;
-    padding-top: 42px;
-    padding-bottom: 80px;
-  }
-  
-  .poke-output-layout {
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(250px, 300px) 280px 350px;
-    align-items: start;
-    justify-content: center;
-    gap: 20px;
-  }
-  
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.poke-output-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #fff9f0;
+  color: #2e2e2e;
+  font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.poke-output-container {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px 30px 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.poke-output-header {
+  position: relative;
+  width: 100%;
+  height: 68px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.poke-output-back-button {
+  min-width: 104px;
+  height: 44px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 3px solid #2e2e2e;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.poke-output-back-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.poke-output-back-button:hover {
+  background: #ffc629;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #2e2e2e;
+}
+
+.poke-output-back-button:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #2e2e2e;
+}
+
+.poke-output-current-step {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.poke-output-current-step span,
+.poke-output-ready-state span {
+  color: #aaa49b;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.poke-output-current-step strong {
+  color: #2e2e2e;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.poke-output-ready-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  opacity: 0.42;
+}
+
+.poke-output-ready-state strong {
+  color: #2e2e2e;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.poke-output-content {
+  flex: 1;
+  width: 100%;
+  padding-top: 42px;
+  padding-bottom: 80px;
+}
+
+.poke-output-layout {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(250px, 300px) 280px 350px;
+  align-items: start;
+  justify-content: center;
+  gap: 50px;
+}
+
+.poke-output-look-panel,
+.poke-output-edit-panel {
+  width: 100%;
+  padding: 20px;
+  border: 3px solid #2e2e2e;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 8px 0 #2e2e2e;
+}
+
+.poke-output-look-panel-header,
+.poke-output-panel-header,
+.poke-mobile-customize-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.poke-output-look-panel-icon,
+.poke-output-panel-header-icon,
+.poke-mobile-customize-header-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #2e2e2e;
+  border-radius: 14px;
+  box-shadow: 0 3px 0 #2e2e2e;
+}
+
+.poke-output-look-panel-icon {
+  background: #ff7b7b;
+}
+
+.poke-output-panel-header-icon,
+.poke-mobile-customize-header-icon {
+  background: #ffc629;
+}
+
+.poke-output-look-panel-icon svg,
+.poke-output-panel-header-icon svg,
+.poke-mobile-customize-header-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.poke-output-look-panel-title,
+.poke-output-panel-header h2,
+.poke-mobile-customize-header h2 {
+  margin: 0;
+  color: #000000;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.poke-look-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.poke-look-section {
+  overflow: hidden;
+  border: 2px solid #2e2e2e;
+  border-radius: 16px;
+  background: #fff9f0;
+}
+
+.poke-look-section-button {
+  width: 100%;
+  min-height: 62px;
+  padding: 10px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  color: #2e2e2e;
+  cursor: pointer;
+  text-align: left;
+}
+
+.poke-look-section-title {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.poke-look-section-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2e2e2e;
+  border-radius: 11px;
+  background: #ffffff;
+}
+
+.poke-look-section-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.poke-look-section-heading {
+  margin: 0;
+  color: #2e2e2e;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.poke-look-section-current {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  color: #77736d;
+  font-size: 8px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.poke-look-section-current p {
+  margin: 0;
+}
+
+.poke-look-section-chevron {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.18s ease;
+}
+
+.poke-look-section-chevron svg {
+  width: 15px;
+  height: 15px;
+}
+
+.poke-look-section-open .poke-look-section-chevron {
+  transform: rotate(180deg);
+}
+
+.poke-filter-grid {
+  padding: 0 10px 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.poke-filter-option {
+  min-width: 0;
+  padding: 3px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: #2e2e2e;
+  cursor: pointer;
+  text-align: left;
+}
+
+.poke-filter-option:hover {
+  background: #ffffff;
+}
+
+.poke-filter-option.active {
+  border-color: #2e2e2e;
+  background: #ffffff;
+  box-shadow: 0 3px 0 #2e2e2e;
+}
+
+.poke-filter-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  overflow: hidden;
+  border: 2px solid #2e2e2e;
+  border-radius: 8px;
+  background: #e8e3dc;
+}
+
+.poke-filter-preview img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.poke-filter-animated-edge {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  filter: grayscale(1) contrast(4) brightness(0.72);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.poke-filter-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffc629, #ff7b7b);
+  color: #2e2e2e;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.poke-filter-name {
+  display: block;
+  margin: 4px 0 0;
+  overflow: hidden;
+  color: #2e2e2e;
+  font-size: 7px;
+  font-weight: 900;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.poke-frame-grid {
+  padding: 0 10px 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.poke-frame-option {
+  min-width: 0;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  color: #2e2e2e;
+  cursor: pointer;
+  text-align: left;
+}
+
+.poke-frame-option:hover {
+  background: #ffffff;
+}
+
+.poke-frame-option.active {
+  border-color: #2e2e2e;
+  background: #ffffff;
+  box-shadow: 0 3px 0 #2e2e2e;
+}
+
+.poke-frame-preview {
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  display: block;
+  overflow: hidden;
+  border: 2px solid #2e2e2e;
+  border-radius: 8px;
+  background: #e8e3dc;
+}
+
+.poke-frame-preview img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.poke-frame-name {
+  margin: 5px 0 0;
+  overflow: hidden;
+  color: #2e2e2e;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.poke-output-preview-column {
+  width: 280px;
+  margin-top: 8px;
+}
+
+.poke-card-preview {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 5 / 7;
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 12px;
+  background: #e6e1d9;
+  box-shadow: 0 8px 0 rgba(46, 46, 46, 0.17), 0 18px 30px rgba(46, 46, 46, 0.06);
+}
+
+.poke-card-photo-window {
+  position: absolute;
+  z-index: 1;
+  left: 8.4%;
+  top: 10.48%;
+  width: 84%;
+  height: 36.86%;
+  overflow: hidden;
+  background: #d8d3cb;
+}
+
+.poke-card-photo-window img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.poke-card-photo-animated-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.2;
+  filter: grayscale(1) contrast(4) brightness(0.72);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.poke-card-photo-window > span {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa49b;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.poke-card-frame-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.poke-card-name,
+.poke-card-power-name,
+.poke-card-power-description {
+  position: absolute;
+  z-index: 3;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+.poke-card-name {
+  top: 4.3%;
+  left: 19.33%;
+  width: 46.67%;
+  font-size: 14px;
+  font-size: 5cqw;
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.poke-card-power-name {
+  top: 65.35%;
+  left: 15%;
+  width: 70%;
+  font-size: 13px;
+  font-size: 4.55cqw;
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.poke-card-power-description {
+  top: 71.15%;
+  left: 7.73%;
+  width: 82.67%;
+  max-height: 12%;
+  font-size: 9px;
+  font-size: 3.05cqw;
+  font-weight: 600;
+  line-height: 1.27;
+  text-align: left;
+}
+
+.poke-card-placeholder {
+  opacity: 0.38;
+}
+
+.poke-frame-preview {
+  position: relative;
+}
+
+.poke-frame-preview-full-art {
+  background: #f8d85f;
+}
+
+.poke-frame-full-art-backdrop {
+  position: absolute;
+  inset: 5%;
+  border-radius: 5px;
+  background: linear-gradient( 135deg, #ff7b7b 0%, #ffc629 34%, #8fd3ff 68%, #b7f0c7 100% );
+}
+
+.poke-frame-preview-full-art img {
+  position: relative;
+  z-index: 1;
+}
+
+.poke-frame-type-badge {
+  display: inline-flex;
+  margin-top: 4px;
+  padding: 3px 5px;
+  border: 1.5px solid #2e2e2e;
+  border-radius: 999px;
+  background: #ffc629;
+  color: #2e2e2e;
+  font-size: 5px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.poke-card-photo-window-full-art {
+  left: 4.13%;
+  top: 4.76%;
+  width: 91.74%;
+  height: 82.86%;
+}
+
+.poke-card-photo-window-full-art img {
+  object-position: center;
+}
+
+.poke-card-preview-full-art .poke-card-frame-overlay {
+  z-index: 3;
+}
+
+.poke-card-preview-full-art .poke-card-name,
+.poke-card-preview-full-art .poke-card-power-name,
+.poke-card-preview-full-art .poke-card-power-description {
+  z-index: 4;
+}
+
+.poke-card-name-full-art {
+  top: 4.15%;
+  left: 19.33%;
+  width: 46.67%;
+  color: #000000;
+}
+
+.poke-card-power-name-full-art {
+  top: 55.15%;
+  left: 32%;
+  width: 51%;
+  color: #b50f0f;
+  text-align: left;
+}
+
+.poke-card-power-description-full-art {
+  top: 59.05%;
+  left: 7.73%;
+  width: 82.67%;
+  max-height: 9%;
+  color: #000000;
+  text-align: left;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5), 0 0 3px rgba(255, 255, 255, 0.28);
+}
+
+.poke-settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.poke-setting-row {
+  padding: 12px;
+  border: 2px solid #2e2e2e;
+  border-radius: 16px;
+  background: #fff9f0;
+}
+
+.poke-setting-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.poke-setting-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #2e2e2e;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.poke-setting-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.poke-setting-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.poke-setting-copy strong {
+  color: #2e2e2e;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.poke-setting-copy small {
+  color: #aaa49b;
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.poke-setting-field {
+  margin-top: 11px;
+}
+
+.poke-setting-field input,
+.poke-setting-field textarea {
+  width: 100%;
+  border: 2px solid #2e2e2e;
+  border-radius: 11px;
+  outline: 0;
+  background: #ffffff;
+  color: #2e2e2e;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.poke-setting-field input {
+  height: 40px;
+  padding: 0 11px;
+}
+
+.poke-setting-field textarea {
+  min-height: 88px;
+  padding: 10px 11px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+.poke-setting-field input:focus,
+.poke-setting-field textarea:focus {
+  box-shadow: 0 3px 0 #2e2e2e;
+}
+
+.poke-setting-field input::placeholder,
+.poke-setting-field textarea::placeholder {
+  color: #aaa49b;
+}
+
+.poke-output-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.poke-output-action-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.poke-output-action-button {
+  width: 100%;
+  height: 46px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #2e2e2e;
+  border-radius: 13px;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.poke-output-action-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.poke-output-download-button {
+  background: #ff7b7b;
+}
+
+.poke-output-share-button {
+  background: #ffc629;
+}
+
+.poke-output-start-over-button {
+  background: #ffffff;
+}
+
+.poke-output-action-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #2e2e2e;
+}
+
+.poke-output-action-button:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #2e2e2e;
+}
+
+.poke-output-action-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.poke-output-mobile-toolbar {
+  display: none;
+  width: 100%;
+  margin: 0 auto 16px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.poke-mobile-tool-button {
+  width: 46px;
+  height: 44px;
+  min-width: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #2e2e2e;
+  border-radius: 13px;
+  background: #ffffff;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.poke-mobile-download-tool {
+  background: #ff7b7b;
+}
+
+.poke-mobile-share-tool {
+  background: #ffc629;
+}
+
+.poke-mobile-customize-button {
+  height: 44px;
+  min-width: 0;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 3px solid #2e2e2e;
+  border-radius: 13px;
+  background: #ffc629;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.poke-mobile-tool-button svg,
+.poke-mobile-customize-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.poke-mobile-tool-button:hover:not(:disabled),
+.poke-mobile-customize-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #2e2e2e;
+}
+
+.poke-mobile-tool-button:active:not(:disabled),
+.poke-mobile-customize-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #2e2e2e;
+}
+
+.poke-mobile-tool-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.poke-mobile-customize-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(46, 46, 46, 0.28);
+  backdrop-filter: blur(4px);
+}
+
+.poke-mobile-customize-panel {
+  width: min(390px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 3px solid #2e2e2e;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 8px 0 #2e2e2e;
+}
+
+.poke-mobile-look-section,
+.poke-mobile-settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.poke-mobile-settings-section {
+  margin-top: 16px;
+}
+
+.poke-mobile-customize-subtitle {
+  color: #aaa49b;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.poke-mobile-customize-okay {
+  width: 100%;
+  height: 48px;
+  margin-top: 16px;
+  border: 3px solid #2e2e2e;
+  border-radius: 14px;
+  background: #ffc629;
+  color: #2e2e2e;
+  box-shadow: 0 4px 0 #2e2e2e;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+@media (max-width: 1000px) {
   .poke-output-look-panel,
   .poke-output-edit-panel {
-    width: 100%;
-    padding: 20px;
-    border: 3px solid #2e2e2e;
-    border-radius: 24px;
-    background: #ffffff;
-    box-shadow: 0 8px 0 #2e2e2e;
+    display: none;
   }
-  
-  .poke-output-look-panel-header,
-  .poke-output-panel-header,
-  .poke-mobile-customize-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+
+  .poke-output-content {
+    padding-top: 32px;
+    padding-bottom: 40px;
   }
-  
-  .poke-output-look-panel-icon,
-  .poke-output-panel-header-icon,
-  .poke-mobile-customize-header-icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #2e2e2e;
-    border-radius: 14px;
-    box-shadow: 0 3px 0 #2e2e2e;
-  }
-  
-  .poke-output-look-panel-icon {
-    background: #ff7b7b;
-  }
-  
-  .poke-output-panel-header-icon,
-  .poke-mobile-customize-header-icon {
-    background: #ffc629;
-  }
-  
-  .poke-output-look-panel-icon svg,
-  .poke-output-panel-header-icon svg,
-  .poke-mobile-customize-header-icon svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .poke-output-look-panel-title,
-  .poke-output-panel-header h2,
-  .poke-mobile-customize-header h2 {
-    margin: 0;
-    color: #000000;
-    font-size: 20px;
-    font-weight: 900;
-    letter-spacing: -0.03em;
-  }
-  
-  .poke-look-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .poke-look-section {
-    overflow: hidden;
-    border: 2px solid #2e2e2e;
-    border-radius: 16px;
-    background: #fff9f0;
-  }
-  
-  .poke-look-section-button {
-    width: 100%;
-    min-height: 62px;
-    padding: 10px 11px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    border: 0;
-    background: transparent;
-    color: #2e2e2e;
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .poke-look-section-title {
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-  }
-  
-  .poke-look-section-icon {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #2e2e2e;
-    border-radius: 11px;
-    background: #ffffff;
-  }
-  
-  .poke-look-section-icon svg {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .poke-look-section-heading {
-    margin: 0;
-    color: #2e2e2e;
-    font-size: 13px;
-    font-weight: 900;
-    line-height: 1.15;
-  }
-  
-  .poke-look-section-current {
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 5px;
-    color: #77736d;
-    font-size: 8px;
-    font-weight: 900;
-    text-transform: uppercase;
-  }
-  
-  .poke-look-section-current p {
-    margin: 0;
-  }
-  
-  .poke-look-section-chevron {
-    width: 25px;
-    height: 25px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.18s ease;
-  }
-  
-  .poke-look-section-chevron svg {
-    width: 15px;
-    height: 15px;
-  }
-  
-  .poke-look-section-open .poke-look-section-chevron {
-    transform: rotate(180deg);
-  }
-  
-  .poke-filter-grid {
-    padding: 0 10px 12px;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 5px;
-  }
-  
-  .poke-filter-option {
-    min-width: 0;
-    padding: 3px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    background: transparent;
-    color: #2e2e2e;
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .poke-filter-option:hover {
-    background: #ffffff;
-  }
-  
-  .poke-filter-option.active {
-    border-color: #2e2e2e;
-    background: #ffffff;
-    box-shadow: 0 3px 0 #2e2e2e;
-  }
-  
-  .poke-filter-preview {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+
+  .poke-output-layout {
     display: block;
-    overflow: hidden;
-    border: 2px solid #2e2e2e;
-    border-radius: 8px;
-    background: #e8e3dc;
+    min-height: 0;
   }
-  
-  .poke-filter-preview img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .poke-filter-animated-edge {
-    position: absolute;
-    inset: 0;
-    opacity: 0.22;
-    filter: grayscale(1) contrast(4) brightness(0.72);
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-  
-  .poke-filter-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #ffc629, #ff7b7b);
-    color: #2e2e2e;
-    font-size: 20px;
-    font-weight: 900;
-  }
-  
-  .poke-filter-name {
-    display: block;
-    margin: 4px 0 0;
-    overflow: hidden;
-    color: #2e2e2e;
-    font-size: 7px;
-    font-weight: 900;
-    line-height: 1.05;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
-  .poke-frame-grid {
-    padding: 0 10px 12px;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-  }
-  
-  .poke-frame-option {
-    min-width: 0;
-    padding: 5px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background: transparent;
-    color: #2e2e2e;
-    cursor: pointer;
-    text-align: left;
-  }
-  
-  .poke-frame-option:hover {
-    background: #ffffff;
-  }
-  
-  .poke-frame-option.active {
-    border-color: #2e2e2e;
-    background: #ffffff;
-    box-shadow: 0 3px 0 #2e2e2e;
-  }
-  
-  .poke-frame-preview {
-    width: 100%;
-    aspect-ratio: 5 / 7;
-    display: block;
-    overflow: hidden;
-    border: 2px solid #2e2e2e;
-    border-radius: 8px;
-    background: #e8e3dc;
-  }
-  
-  .poke-frame-preview img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .poke-frame-name {
-    margin: 5px 0 0;
-    overflow: hidden;
-    color: #2e2e2e;
-    font-size: 8px;
-    font-weight: 900;
-    line-height: 1.1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
+
   .poke-output-preview-column {
-    width: 280px;
+    width: min(320px, 100%);
     margin: 0 auto;
   }
-  
+
   .poke-card-preview {
-    position: relative;
-    width: 280px;
-    aspect-ratio: 5 / 7;
-    overflow: hidden;
-    container-type: inline-size;
-    border-radius: 12px;
-    background: #e6e1d9;
-    box-shadow: 0 8px 0 rgba(46, 46, 46, 0.17), 0 18px 30px rgba(46, 46, 46, 0.06);
-  }
-  
-  .poke-card-photo-window {
-    position: absolute;
-    z-index: 1;
-    left: 8.4%;
-    top: 10.48%;
-    width: 84%;
-    height: 36.86%;
-    overflow: hidden;
-    background: #d8d3cb;
-  }
-  
-  .poke-card-photo-window img {
     width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
   }
-  
-  .poke-card-photo-animated-edge {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    opacity: 0.2;
-    filter: grayscale(1) contrast(4) brightness(0.72);
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
-  
-  .poke-card-photo-window > span {
-    width: 100%;
-    height: 100%;
+
+  .poke-output-mobile-toolbar {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #aaa49b;
-    font-size: 10px;
-    font-weight: 900;
   }
-  
-  .poke-card-frame-overlay {
-    position: absolute;
-    z-index: 2;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: fill;
-    pointer-events: none;
+
+  .poke-mobile-tool-button {
+    width: 46px;
   }
-  
-  .poke-card-name,
-  .poke-card-power-name,
-  .poke-card-power-description {
-    position: absolute;
-    z-index: 3;
-    margin: 0;
-    overflow: hidden;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+
+  .poke-mobile-customize-button {
+    width: fit-content;
   }
-  
-  .poke-card-name {
-    top: 4.3%;
-    left: 19.33%;
-    width: 46.67%;
-    font-size: 14px;
-    font-size: 5cqw;
-    font-weight: 700;
-    line-height: 1;
-    text-align: left;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+
+  .poke-mobile-customize-overlay {
+    display: flex;
   }
-  
-  .poke-card-power-name {
-    top: 65.35%;
-    left: 15%;
-    width: 70%;
-    font-size: 13px;
-    font-size: 4.55cqw;
-    font-weight: 700;
-    line-height: 1.05;
+}
+
+@media (max-width: 720px) {
+  .poke-filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .poke-frame-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+    padding: 0 8px 10px;
+  }
+
+  .poke-filter-option,
+  .poke-frame-option {
+    padding: 3px;
+    border-radius: 9px;
     text-align: center;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
-  
-  .poke-card-power-description {
-    top: 71.15%;
-    left: 7.73%;
-    width: 82.67%;
-    max-height: 12%;
-    font-size: 9px;
-    font-size: 3.05cqw;
-    font-weight: 600;
-    line-height: 1.27;
-    text-align: left;
+
+  .poke-filter-preview {
+    width: 48px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-width: 1.5px;
+    border-radius: 6px;
   }
-  
-  .poke-card-placeholder {
-    opacity: 0.38;
+
+  .poke-frame-preview {
+    width: 40px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-width: 1.5px;
+    border-radius: 6px;
   }
-  
-  .poke-settings-content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  .poke-filter-name,
+  .poke-frame-name {
+    margin-top: 3px;
+    font-size: 6px;
+    text-align: center;
   }
-  
-  .poke-setting-row {
+
+  .poke-output-container {
+    padding: 15px 15px 48px;
+  }
+
+  .poke-output-header {
+    height: 58px;
+  }
+
+  .poke-output-content {
+    padding-top: 24px;
+    padding-bottom: 32px;
+  }
+
+  .poke-output-preview-column {
+    width: min( 300px, calc(100vw - 30px) );
+  }
+
+  .poke-mobile-customize-overlay {
+    align-items: flex-end;
     padding: 12px;
-    border: 2px solid #2e2e2e;
-    border-radius: 16px;
-    background: #fff9f0;
   }
-  
-  .poke-setting-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+
+  .poke-mobile-customize-panel {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+    padding: 18px;
+    border-radius: 24px 24px 18px 18px;
   }
-  
-  .poke-setting-icon {
-    width: 36px;
-    height: 36px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #2e2e2e;
-    border-radius: 12px;
-    background: #ffffff;
+}
+
+@media (max-width: 520px) {
+  .poke-output-back-button {
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    padding: 0;
   }
-  
-  .poke-setting-icon svg {
+
+  .poke-output-back-button span {
+    display: none;
+  }
+
+  .poke-output-ready-state {
+    display: none;
+  }
+
+  .poke-output-current-step span {
+    font-size: 7px;
+  }
+
+  .poke-output-current-step strong {
+    font-size: 11px;
+  }
+
+  .poke-output-mobile-toolbar {
+    width: 100%;
+    grid-template-columns: repeat(3, 44px) minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  .poke-mobile-tool-button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .poke-mobile-customize-button {
+    height: 44px;
+    padding: 0 12px;
+  }
+
+  .poke-setting-row {
+    padding: 10px;
+  }
+
+  .poke-mobile-customize-panel {
+    padding: 14px;
+  }
+
+  .poke-look-section-button {
+    min-height: 50px;
+    padding: 7px 8px;
+  }
+
+  .poke-look-section-icon {
+    width: 29px;
+    height: 29px;
+    border-radius: 9px;
+  }
+
+  .poke-look-section-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .poke-look-section-heading {
+    font-size: 11px;
+  }
+
+  .poke-look-section-current {
+    font-size: 7px;
+  }
+
+  .poke-filter-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .poke-frame-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 0 6px 8px;
+  }
+
+  .poke-filter-option,
+  .poke-frame-option {
+    padding: 2px;
+    border-radius: 8px;
+  }
+
+  .poke-filter-preview {
+    width: 42px;
+  }
+
+  .poke-frame-preview {
+    width: 34px;
+  }
+
+  .poke-filter-name,
+  .poke-frame-name {
+    margin-top: 2px;
+    font-size: 5.5px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .poke-output-container {
+    padding-inline: 10px;
+  }
+
+  .poke-output-preview-column {
+    width: min( 286px, calc(100vw - 20px) );
+  }
+
+  .poke-output-mobile-toolbar {
+    gap: 4px;
+    grid-template-columns: repeat(3, 40px) minmax(0, 1fr);
+  }
+
+  .poke-filter-grid,
+  .poke-frame-grid {
+    gap: 3px;
+    padding-inline: 4px;
+  }
+
+  .poke-filter-preview {
+    width: 37px;
+  }
+
+  .poke-frame-preview {
+    width: 30px;
+  }
+
+  .poke-mobile-tool-button {
+    height: 40px;
+  }
+
+  .poke-mobile-customize-button {
+    height: 42px;
+    font-size: 11px;
+  }
+
+  .poke-mobile-tool-button svg,
+  .poke-mobile-customize-button svg {
     width: 17px;
     height: 17px;
   }
-  
-  .poke-setting-copy {
-    min-width: 0;
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-  
-  .poke-setting-copy strong {
-    color: #2e2e2e;
-    font-size: 14px;
-    font-weight: 900;
-  }
-  
-  .poke-setting-copy small {
-    color: #aaa49b;
-    font-size: 8px;
-    font-weight: 800;
-  }
-  
-  .poke-setting-field {
-    margin-top: 11px;
-  }
-  
-  .poke-setting-field input,
-  .poke-setting-field textarea {
-    width: 100%;
-    border: 2px solid #2e2e2e;
-    border-radius: 11px;
-    outline: 0;
-    background: #ffffff;
-    color: #2e2e2e;
-    font-size: 11px;
-    font-weight: 800;
-  }
-  
-  .poke-setting-field input {
-    height: 40px;
-    padding: 0 11px;
-  }
-  
-  .poke-setting-field textarea {
-    min-height: 88px;
-    padding: 10px 11px;
-    resize: vertical;
-    line-height: 1.4;
-  }
-  
-  .poke-setting-field input:focus,
-  .poke-setting-field textarea:focus {
-    box-shadow: 0 3px 0 #2e2e2e;
-  }
-  
-  .poke-setting-field input::placeholder,
-  .poke-setting-field textarea::placeholder {
-    color: #aaa49b;
-  }
-  
-  .poke-output-actions {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .poke-output-action-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  
-  .poke-output-action-button {
-    width: 100%;
-    height: 46px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #2e2e2e;
-    border-radius: 13px;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  
-  .poke-output-action-button svg {
-    width: 18px;
-    height: 18px;
-  }
-  
-  .poke-output-download-button {
-    background: #ff7b7b;
-  }
-  
-  .poke-output-share-button {
-    background: #ffc629;
-  }
-  
-  .poke-output-start-over-button {
-    background: #ffffff;
-  }
-  
-  .poke-output-action-button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #2e2e2e;
-  }
-  
-  .poke-output-action-button:active:not(:disabled) {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #2e2e2e;
-  }
-  
-  .poke-output-action-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-  
-  .poke-output-mobile-toolbar {
-    display: none;
-    width: 100%;
-    margin: 0 auto 16px;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  
-  .poke-mobile-tool-button {
-    width: 46px;
-    height: 44px;
-    min-width: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #2e2e2e;
-    border-radius: 13px;
-    background: #ffffff;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
-  }
-  
-  .poke-mobile-download-tool {
-    background: #ff7b7b;
-  }
-  
-  .poke-mobile-share-tool {
-    background: #ffc629;
-  }
-  
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poke-output-back-button,
+  .poke-frame-option,
+  .poke-output-action-button,
+  .poke-mobile-tool-button,
   .poke-mobile-customize-button {
-    height: 44px;
-    min-width: 0;
-    padding: 0 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 7px;
-    border: 3px solid #2e2e2e;
-    border-radius: 13px;
-    background: #ffc629;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 900;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    transition: none;
   }
-  
-  .poke-mobile-tool-button svg,
-  .poke-mobile-customize-button svg {
-    width: 18px;
-    height: 18px;
+}
+
+.poke-output-page {
+  \--pixel-black: #202020;
+  \--pixel-ink: #303030;
+  \--pixel-paper: #fffdf2;
+  \--pixel-cream: #fff7d6;
+  \--pixel-red: #df4a4a;
+  \--pixel-red-dark: #9f2929;
+  \--pixel-yellow: #f7d154;
+  \--pixel-blue: #4f77b8;
+  \--pixel-blue-dark: #315388;
+  \--pixel-green: #77a956;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient( 90deg, rgba(32, 32, 32, 0.055) 1px, transparent 1px ), linear-gradient( rgba(32, 32, 32, 0.055) 1px, transparent 1px ), #f4e8b9;
+  background-size: 18px 18px;
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+}
+
+.poke-output-pixel-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient( 135deg, transparent 0 74%, rgba(79, 119, 184, 0.08) 74% 78%, transparent 78% 100% );
+  background-size: 36px 36px;
+}
+
+.poke-output-container {
+  position: relative;
+  z-index: 1;
+}
+
+.poke-output-back-button,
+.poke-output-ready-state,
+.poke-output-look-panel,
+.poke-output-edit-panel,
+.poke-look-section,
+.poke-filter-option.active,
+.poke-frame-option.active,
+.poke-setting-row,
+.poke-setting-icon,
+.poke-setting-field input,
+.poke-setting-field textarea,
+.poke-output-action-button,
+.poke-mobile-tool-button,
+.poke-mobile-customize-button,
+.poke-mobile-customize-panel,
+.poke-mobile-customize-okay {
+  border-color: var(--pixel-black);
+  border-radius: 0;
+}
+
+.poke-output-back-button {
+  border-width: 4px;
+  background: var(--pixel-paper);
+  color: var(--pixel-black);
+  box-shadow: 4px 4px 0 var(--pixel-black);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.poke-output-back-button:hover {
+  background: var(--pixel-yellow);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-output-back-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--pixel-black);
+}
+
+.poke-output-current-step span {
+  color: var(--pixel-red-dark);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.poke-output-current-step strong {
+  color: var(--pixel-black);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.poke-output-ready-state {
+  min-width: 108px;
+  padding: 8px 12px;
+  align-items: center;
+  border: 4px solid var(--pixel-black);
+  background: var(--pixel-yellow);
+  box-shadow: 4px 4px 0 var(--pixel-black);
+  opacity: 1;
+}
+
+.poke-output-ready-state span {
+  color: var(--pixel-red-dark);
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.poke-output-ready-state strong {
+  color: var(--pixel-black);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.poke-output-look-panel,
+.poke-output-edit-panel {
+  border: 5px solid var(--pixel-black);
+  background: var(--pixel-paper);
+  box-shadow: inset 0 0 0 4px var(--pixel-blue), 6px 6px 0 var(--pixel-black);
+}
+
+.poke-output-look-panel-icon,
+.poke-output-panel-header-icon,
+.poke-mobile-customize-header-icon {
+  border: 3px solid var(--pixel-black);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+
+.poke-output-look-panel-icon {
+  background: var(--pixel-red);
+  color: #ffffff;
+}
+
+.poke-output-panel-header-icon,
+.poke-mobile-customize-header-icon {
+  background: var(--pixel-yellow);
+  color: var(--pixel-black);
+}
+
+.poke-output-look-panel-title,
+.poke-output-panel-header h2,
+.poke-mobile-customize-header h2 {
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.poke-look-section {
+  border: 3px solid var(--pixel-black);
+  background: var(--pixel-cream);
+  box-shadow: 3px 3px 0 rgba(32, 32, 32, 0.2);
+}
+
+.poke-look-section-button {
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+}
+
+.poke-look-section-icon {
+  border: 3px solid var(--pixel-black);
+  border-radius: 0;
+  background: var(--pixel-paper);
+}
+
+.poke-look-section-heading {
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.poke-look-section-current {
+  color: var(--pixel-blue-dark);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+}
+
+.poke-look-section-open {
+  background: linear-gradient( 135deg, rgba(247, 209, 84, 0.16) 25%, transparent 25% 50%, rgba(247, 209, 84, 0.16) 50% 75%, transparent 75% ), var(--pixel-cream);
+  background-size: 14px 14px;
+}
+
+.poke-filter-option,
+.poke-frame-option {
+  border-radius: 0;
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+}
+
+.poke-filter-option:hover,
+.poke-frame-option:hover {
+  background: var(--pixel-paper);
+}
+
+.poke-filter-option.active,
+.poke-frame-option.active {
+  border: 3px solid var(--pixel-black);
+  background: var(--pixel-yellow);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+
+.poke-filter-preview,
+.poke-frame-preview {
+  border: 3px solid var(--pixel-black);
+  border-radius: 0;
+  background: #d7e3c0;
+  image-rendering: auto;
+}
+
+.poke-filter-name,
+.poke-frame-name {
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.poke-filter-placeholder {
+  background: linear-gradient( 45deg, #d7e3c0 25%, #c6d5ad 25% 50%, #d7e3c0 50% 75%, #c6d5ad 75% );
+  background-size: 10px 10px;
+  color: var(--pixel-green);
+}
+
+.poke-card-preview {
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 0 0 0 4px var(--pixel-paper), 0 0 0 8px var(--pixel-blue-dark), 7px 7px 0 8px var(--pixel-black);
+}
+
+.poke-setting-row {
+  border: 3px solid var(--pixel-black);
+  background: var(--pixel-cream);
+  box-shadow: 3px 3px 0 rgba(32, 32, 32, 0.18);
+}
+
+.poke-setting-icon {
+  border: 3px solid var(--pixel-black);
+  background: var(--pixel-paper);
+}
+
+.poke-setting-copy strong {
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.poke-setting-copy small {
+  color: var(--pixel-red-dark);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+}
+
+.poke-setting-field input,
+.poke-setting-field textarea {
+  border: 3px solid var(--pixel-black);
+  background: var(--pixel-paper);
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+  box-shadow: none;
+}
+
+.poke-setting-field input:focus,
+.poke-setting-field textarea:focus {
+  outline: none;
+  box-shadow: 3px 3px 0 var(--pixel-blue-dark);
+}
+
+.poke-setting-field input::placeholder,
+.poke-setting-field textarea::placeholder {
+  color: #77736d;
+  opacity: 0.75;
+}
+
+.poke-output-action-button,
+.poke-mobile-tool-button,
+.poke-mobile-customize-button,
+.poke-mobile-customize-okay {
+  border: 4px solid var(--pixel-black);
+  box-shadow: 4px 4px 0 var(--pixel-black);
+  color: var(--pixel-black);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+}
+
+.poke-output-download-button,
+.poke-mobile-download-tool {
+  background: var(--pixel-red);
+  color: #ffffff;
+}
+
+.poke-output-share-button,
+.poke-mobile-share-tool,
+.poke-mobile-customize-button,
+.poke-mobile-customize-okay {
+  background: var(--pixel-yellow);
+}
+
+.poke-output-start-over-button,
+.poke-mobile-tool-button:not(.poke-mobile-download-tool):not(.poke-mobile-share-tool) {
+  background: var(--pixel-paper);
+}
+
+.poke-output-action-button:hover:not(:disabled),
+.poke-mobile-tool-button:hover:not(:disabled),
+.poke-mobile-customize-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--pixel-black);
+}
+
+.poke-output-action-button:active:not(:disabled),
+.poke-mobile-tool-button:active:not(:disabled),
+.poke-mobile-customize-button:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--pixel-black);
+}
+
+.poke-mobile-customize-overlay {
+  background: rgba(32, 32, 32, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.poke-mobile-customize-panel {
+  border: 5px solid var(--pixel-black);
+  background: var(--pixel-paper);
+  box-shadow: inset 0 0 0 4px var(--pixel-blue), 6px 6px 0 var(--pixel-black);
+}
+
+.poke-mobile-customize-subtitle {
+  color: var(--pixel-red-dark);
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.poke-mobile-customize-okay {
+  color: var(--pixel-black);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .poke-output-back-button {
+    box-shadow: 3px 3px 0 var(--pixel-black);
   }
-  
-  .poke-mobile-tool-button:hover:not(:disabled),
-  .poke-mobile-customize-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 #2e2e2e;
-  }
-  
-  .poke-mobile-tool-button:active:not(:disabled),
-  .poke-mobile-customize-button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 #2e2e2e;
-  }
-  
-  .poke-mobile-tool-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-  
-  .poke-mobile-customize-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background: rgba(46, 46, 46, 0.28);
-    backdrop-filter: blur(4px);
-  }
-  
+
+  .poke-output-look-panel,
+  .poke-output-edit-panel,
   .poke-mobile-customize-panel {
-    width: min(390px, 100%);
-    max-height: calc(100vh - 40px);
-    overflow-y: auto;
-    padding: 20px;
-    border: 3px solid #2e2e2e;
-    border-radius: 24px;
-    background: #ffffff;
-    box-shadow: 0 8px 0 #2e2e2e;
+    box-shadow: inset 0 0 0 3px var(--pixel-blue), 4px 4px 0 var(--pixel-black);
   }
-  
-  .poke-mobile-look-section,
-  .poke-mobile-settings-section {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
+
+  .poke-card-preview {
+    box-shadow: 0 0 0 3px var(--pixel-paper), 0 0 0 6px var(--pixel-blue-dark), 5px 5px 0 6px var(--pixel-black);
   }
-  
-  .poke-mobile-settings-section {
-    margin-top: 16px;
+}
+
+@media (max-width: 520px) {
+  .poke-output-current-step strong {
+    font-size: 10px;
   }
-  
-  .poke-mobile-customize-subtitle {
-    color: #aaa49b;
-    font-size: 8px;
-    font-weight: 900;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  
+
+  .poke-output-action-button,
+  .poke-mobile-tool-button,
+  .poke-mobile-customize-button,
   .poke-mobile-customize-okay {
+    border-width: 3px;
+    box-shadow: 3px 3px 0 var(--pixel-black);
+  }
+
+  .poke-mobile-customize-panel {
+    border-width: 4px;
+  }
+}
+
+/* FLOATING PREVIEW CARD */
+
+.poke-card-float-stage {
+  position: relative;
+  width: 280px;
+  aspect-ratio: 5 / 7;
+  isolation: isolate;
+}
+
+.poke-card-float-stage .poke-card-preview {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  animation: poke-card-float 3.8s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.poke-card-floating-shadow {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: -22px;
+  width: 72%;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(32, 32, 32, 0.24);
+  filter: blur(1px);
+  transform: translateX(-50%);
+  animation: poke-card-shadow-pulse 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes poke-card-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(0.6deg);
+  }
+}
+
+@keyframes poke-card-shadow-pulse {
+  0%,
+  100% {
+    width: 72%;
+    opacity: 0.24;
+  }
+
+  50% {
+    width: 58%;
+    opacity: 0.14;
+  }
+}
+
+.poke-card-pixel-spark {
+  position: absolute;
+  z-index: 5;
+  width: 5px;
+  height: 5px;
+  background: var(--pixel-yellow);
+  box-shadow: 5px 0 0 var(--pixel-yellow), -5px 0 0 var(--pixel-yellow), 0 5px 0 var(--pixel-yellow), 0 -5px 0 var(--pixel-yellow);
+  pointer-events: none;
+  animation: poke-card-sparkle 1.8s steps(2, end) infinite;
+}
+
+.poke-card-pixel-spark-one {
+  top: 8%;
+  right: -18px;
+}
+
+.poke-card-pixel-spark-two {
+  left: -20px;
+  top: 37%;
+  animation-delay: 0.6s;
+}
+
+.poke-card-pixel-spark-three {
+  right: -12px;
+  bottom: 18%;
+  animation-delay: 1.1s;
+}
+
+@keyframes poke-card-sparkle {
+  0%,
+  45% {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+
+  50%,
+  85% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  90%,
+  100% {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+}
+
+/* CUTE PIXEL CHIBI RUNNERS */
+
+.poke-chibi-world {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.poke-chibi-runner {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  will-change: transform;
+}
+
+.poke-chibi-runner-pika {
+  left: -80px;
+  bottom: 34px;
+  animation: poke-chibi-run-right 18s linear infinite;
+}
+
+.poke-chibi-runner-bulb {
+  right: -80px;
+  top: 118px;
+  animation: poke-chibi-run-left 24s linear 4s infinite;
+}
+
+.poke-chibi-runner-fire {
+  left: -80px;
+  bottom: 150px;
+  animation: poke-chibi-run-right-small 22s linear 9s infinite;
+}
+
+@keyframes poke-chibi-run-right {
+  from {
+    transform: translateX(-90px);
+  }
+
+  to {
+    transform: translateX(calc(100vw + 150px));
+  }
+}
+
+@keyframes poke-chibi-run-right-small {
+  from {
+    transform: translateX(-90px) scale(0.84);
+  }
+
+  to {
+    transform: translateX(calc(100vw + 150px)) scale(0.84);
+  }
+}
+
+@keyframes poke-chibi-run-left {
+  from {
+    transform: translateX(90px) scaleX(-1);
+  }
+
+  to {
+    transform: translateX(calc(-100vw - 150px)) scaleX(-1);
+  }
+}
+
+.poke-chibi {
+  position: relative;
+  width: 48px;
+  height: 42px;
+  animation: poke-chibi-hop 0.36s steps(2, end) infinite;
+  filter: drop-shadow(3px 3px 0 rgba(32, 32, 32, 0.28));
+}
+
+@keyframes poke-chibi-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.poke-chibi-face {
+  position: absolute;
+  inset: 0;
+  border: 3px solid var(--pixel-black);
+  border-radius: 42% 42% 46% 46%;
+}
+
+.poke-chibi-eye {
+  position: absolute;
+  top: 13px;
+  width: 5px;
+  height: 7px;
+  background: var(--pixel-black);
+}
+
+.poke-chibi-eye-left {
+  left: 11px;
+}
+
+.poke-chibi-eye-right {
+  right: 11px;
+}
+
+.poke-chibi-cheek {
+  position: absolute;
+  top: 24px;
+  width: 7px;
+  height: 5px;
+  background: var(--pixel-red);
+}
+
+.poke-chibi-cheek-left {
+  left: 5px;
+}
+
+.poke-chibi-cheek-right {
+  right: 5px;
+}
+
+.poke-chibi-smile {
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  width: 8px;
+  height: 4px;
+  border-right: 2px solid var(--pixel-black);
+  border-bottom: 2px solid var(--pixel-black);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.poke-chibi-ear {
+  position: absolute;
+  z-index: -1;
+  top: -11px;
+  width: 12px;
+  height: 22px;
+  border: 3px solid var(--pixel-black);
+}
+
+.poke-chibi-ear-left {
+  left: 5px;
+  transform: rotate(-18deg);
+}
+
+.poke-chibi-ear-right {
+  right: 5px;
+  transform: rotate(18deg);
+}
+
+.poke-chibi-feet {
+  position: absolute;
+  left: 7px;
+  bottom: -5px;
+  width: 12px;
+  height: 6px;
+  background: var(--pixel-black);
+  box-shadow: 22px 0 0 var(--pixel-black);
+}
+
+.poke-chibi-tail {
+  position: absolute;
+  z-index: -1;
+}
+
+.poke-chibi-pika .poke-chibi-face,
+.poke-chibi-pika .poke-chibi-ear {
+  background: #f7d154;
+}
+
+.poke-chibi-pika .poke-chibi-ear::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -3px;
+  width: 12px;
+  height: 7px;
+  background: var(--pixel-black);
+}
+
+.poke-chibi-tail-zap {
+  right: -19px;
+  top: 15px;
+  width: 20px;
+  height: 8px;
+  background: #f7d154;
+  border: 3px solid var(--pixel-black);
+  transform: rotate(-28deg);
+  box-shadow: 8px -8px 0 -2px #f7d154, 10px -10px 0 0 var(--pixel-black);
+}
+
+.poke-chibi-bulb .poke-chibi-face {
+  background: #82c7a5;
+}
+
+.poke-chibi-bulb .poke-chibi-ear {
+  top: -7px;
+  width: 10px;
+  height: 15px;
+  background: #82c7a5;
+}
+
+.poke-chibi-bulb-back {
+  position: absolute;
+  z-index: -2;
+  left: 7px;
+  top: -15px;
+  width: 34px;
+  height: 28px;
+  border: 3px solid var(--pixel-black);
+  border-radius: 55% 55% 45% 45%;
+  background: #5f9b4b;
+}
+
+.poke-chibi-bulb-back::before,
+.poke-chibi-bulb-back::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 13px;
+  height: 18px;
+  border: 3px solid var(--pixel-black);
+  background: #77a956;
+}
+
+.poke-chibi-bulb-back::before {
+  left: 2px;
+  transform: rotate(-28deg);
+}
+
+.poke-chibi-bulb-back::after {
+  right: 2px;
+  transform: rotate(28deg);
+}
+
+.poke-chibi-fire .poke-chibi-face {
+  background: #f08b48;
+}
+
+.poke-chibi-tail-fire {
+  right: -18px;
+  bottom: 3px;
+  width: 20px;
+  height: 9px;
+  border: 3px solid var(--pixel-black);
+  background: #f08b48;
+  transform: rotate(-22deg);
+}
+
+.poke-chibi-tail-fire::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 13px;
+  height: 18px;
+  border: 3px solid var(--pixel-black);
+  background: linear-gradient( to top, #df4a4a 0 45%, #f7d154 45% 100% );
+  clip-path: polygon( 50% 0, 100% 55%, 72% 100%, 28% 100%, 0 55% );
+}
+
+@media (max-width: 1000px) {
+  .poke-card-float-stage {
     width: 100%;
-    height: 48px;
-    margin-top: 16px;
-    border: 3px solid #2e2e2e;
-    border-radius: 14px;
-    background: #ffc629;
-    color: #2e2e2e;
-    box-shadow: 0 4px 0 #2e2e2e;
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 900;
   }
-  
-  @media (max-width: 1000px) {
-    .poke-output-look-panel,
-    .poke-output-edit-panel {
-      display: none;
-    }
-  
-    .poke-output-content {
-      padding-top: 32px;
-      padding-bottom: 40px;
-    }
-  
-    .poke-output-layout {
-      display: block;
-      min-height: 0;
-    }
-  
-    .poke-output-preview-column {
-      width: min(320px, 100%);
-      margin: 0 auto;
-    }
-  
-    .poke-card-preview {
-      width: 100%;
-    }
-  
-    .poke-output-mobile-toolbar {
-      display: flex;
-    }
-  
-    .poke-mobile-tool-button {
-      width: 46px;
-    }
-  
-    .poke-mobile-customize-button {
-      width: fit-content;
-    }
-  
-    .poke-mobile-customize-overlay {
-      display: flex;
-    }
+
+  .poke-chibi-runner {
+    opacity: 0.82;
   }
-  
-  @media (max-width: 720px) {
-    .poke-filter-grid,
-    .poke-frame-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 5px;
-      padding: 0 8px 10px;
-    }
-  
-    .poke-filter-option,
-    .poke-frame-option {
-      padding: 3px;
-      border-radius: 9px;
-      text-align: center;
-    }
-  
-    .poke-filter-preview {
-      width: 48px;
-      max-width: 100%;
-      margin: 0 auto;
-      border-width: 1.5px;
-      border-radius: 6px;
-    }
-  
-    .poke-frame-preview {
-      width: 40px;
-      max-width: 100%;
-      margin: 0 auto;
-      border-width: 1.5px;
-      border-radius: 6px;
-    }
-  
-    .poke-filter-name,
-    .poke-frame-name {
-      margin-top: 3px;
-      font-size: 6px;
-      text-align: center;
-    }
-  
-    .poke-output-container {
-      padding: 15px 15px 48px;
-    }
-  
-    .poke-output-header {
-      height: 58px;
-    }
-  
-    .poke-output-content {
-      padding-top: 24px;
-      padding-bottom: 32px;
-    }
-  
-    .poke-output-preview-column {
-      width: min( 300px, calc(100vw - 30px) );
-    }
-  
-    .poke-mobile-customize-overlay {
-      align-items: flex-end;
-      padding: 12px;
-    }
-  
-    .poke-mobile-customize-panel {
-      width: 100%;
-      max-height: calc(100dvh - 24px);
-      padding: 18px;
-      border-radius: 24px 24px 18px 18px;
-    }
+
+  .poke-chibi-runner-bulb {
+    top: 92px;
   }
-  
-  @media (max-width: 520px) {
-    .poke-output-back-button {
-      width: 42px;
-      min-width: 42px;
-      height: 42px;
-      padding: 0;
-    }
-  
-    .poke-output-back-button span {
-      display: none;
-    }
-  
-    .poke-output-ready-state {
-      display: none;
-    }
-  
-    .poke-output-current-step span {
-      font-size: 7px;
-    }
-  
-    .poke-output-current-step strong {
-      font-size: 11px;
-    }
-  
-    .poke-output-mobile-toolbar {
-      width: 100%;
-      grid-template-columns: repeat(3, 44px) minmax(0, 1fr);
-      gap: 7px;
-    }
-  
-    .poke-mobile-tool-button {
-      width: 44px;
-      height: 44px;
-    }
-  
-    .poke-mobile-customize-button {
-      height: 44px;
-      padding: 0 12px;
-    }
-  
-    .poke-setting-row {
-      padding: 10px;
-    }
-  
-    .poke-mobile-customize-panel {
-      padding: 14px;
-    }
-  
-    .poke-look-section-button {
-      min-height: 50px;
-      padding: 7px 8px;
-    }
-  
-    .poke-look-section-icon {
-      width: 29px;
-      height: 29px;
-      border-radius: 9px;
-    }
-  
-    .poke-look-section-icon svg {
-      width: 14px;
-      height: 14px;
-    }
-  
-    .poke-look-section-heading {
-      font-size: 11px;
-    }
-  
-    .poke-look-section-current {
-      font-size: 7px;
-    }
-  
-    .poke-filter-grid,
-    .poke-frame-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 4px;
-      padding: 0 6px 8px;
-    }
-  
-    .poke-filter-option,
-    .poke-frame-option {
-      padding: 2px;
-      border-radius: 8px;
-    }
-  
-    .poke-filter-preview {
-      width: 42px;
-    }
-  
-    .poke-frame-preview {
-      width: 34px;
-    }
-  
-    .poke-filter-name,
-    .poke-frame-name {
-      margin-top: 2px;
-      font-size: 5.5px;
-      text-align: center;
-    }
+
+  .poke-chibi-runner-fire {
+    bottom: 100px;
   }
-  
-  @media (max-width: 360px) {
-    .poke-output-container {
-      padding-inline: 10px;
-    }
-  
-    .poke-output-preview-column {
-      width: min( 286px, calc(100vw - 20px) );
-    }
-  
-    .poke-output-mobile-toolbar {
-      gap: 4px;
-      grid-template-columns: repeat(3, 40px) minmax(0, 1fr);
-    }
-  
-    .poke-filter-grid,
-    .poke-frame-grid {
-      gap: 3px;
-      padding-inline: 4px;
-    }
-  
-    .poke-filter-preview {
-      width: 37px;
-    }
-  
-    .poke-frame-preview {
-      width: 30px;
-    }
-  
-    .poke-mobile-tool-button {
-      height: 40px;
-    }
-  
-    .poke-mobile-customize-button {
-      height: 42px;
-      font-size: 11px;
-    }
-  
-    .poke-mobile-tool-button svg,
-    .poke-mobile-customize-button svg {
-      width: 17px;
-      height: 17px;
-    }
+}
+
+@media (max-width: 620px) {
+  .poke-card-pixel-spark-one {
+    right: -9px;
   }
-  
-  @media (prefers-reduced-motion: reduce) {
-    .poke-output-back-button,
-    .poke-frame-option,
-    .poke-output-action-button,
-    .poke-mobile-tool-button,
-    .poke-mobile-customize-button {
-      transition: none;
-    }
+
+  .poke-card-pixel-spark-two {
+    left: -9px;
   }
-  
+
+  .poke-card-pixel-spark-three {
+    right: -5px;
+  }
+
+  .poke-chibi-runner {
+    opacity: 0.72;
+  }
+
+  .poke-chibi-runner-pika {
+    bottom: 18px;
+  }
+
+  .poke-chibi-runner-bulb {
+    top: 82px;
+  }
+
+  .poke-chibi-runner-fire {
+    display: none;
+  }
+  .poke-card-preview{
+    margin-top: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poke-card-float-stage .poke-card-preview,
+  .poke-card-floating-shadow,
+  .poke-card-pixel-spark,
+  .poke-chibi-runner,
+  .poke-chibi {
+    animation: none;
+  }
+
+  .poke-chibi-world {
+    display: none;
+  }
+}
