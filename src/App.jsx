@@ -12,7 +12,7 @@ import PoseMatchReference from "./pages/pose_match/pose_match_reference.jsx";
 import PoseMatchPhotobooth from "./pages/pose_match/pose_match_photobooth.jsx";
 import PoseMatchOutput from "./pages/pose_match/pose_match_output.jsx";
 
-import PokePhotobooth from "./pages/pokeframe/photobooth/poke_phoobooth.jsx";
+import PokePhotobooth from "./pages/pokeframe/photobooth/poke_photobooth.jsx";
 
 function getCurrentRoute() {
   const pathname = window.location.pathname;

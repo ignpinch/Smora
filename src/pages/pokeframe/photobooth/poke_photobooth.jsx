@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import "./poke_photobooth.css";
 
-const COUNTDOWN_SECONDS = 3;
+const COUNTDOWN_SECONDS = 5;
 
 function ArrowLeftIcon() {
   return (
@@ -627,14 +627,10 @@ export default function PokePhotobooth({
                   onClick={handleTakePhoto}
                   disabled={isCapturing}
                 >
-                  <span className="poke-capture-icon">
-                    <CameraIcon />
-                  </span>
-
                   <span>
                     {isCapturing
                       ? "Taking photo..."
-                      : "Take Photo"}
+                      : "Start"}
                   </span>
                 </button>
               </div>
@@ -662,10 +658,6 @@ export default function PokePhotobooth({
               </div>
             )}
 
-            <div className="poke-camera-tip">
-              <span>✦</span>
-              Keep your face inside the camera and leave a little space around you.
-            </div>
           </div>
         </section>
       </main>
